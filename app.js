@@ -3,6 +3,15 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var dbprop = require('./server/properties/db-properties');
+
+if(app.get('env') == 'development')
+	process.env.NODE_ENV = 'development';
+		else
+			process.env.NODE_ENV = 'production';
+
+	
+
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/server/views');
@@ -26,4 +35,7 @@ app.engine('html', require('ejs').renderFile);
  var server = require('http').createServer(app).listen(app.get('port'), function(){
  console.log('Express server listening on port ' + app.get('port'));
  });
+ 
+ 
+ 
  
