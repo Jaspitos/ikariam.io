@@ -92,11 +92,10 @@
 				});
 			}
 
-			exports.signUp = function(name, email, username, pass, callback){
+			exports.signUp = function(email, username, pass, callback){
 				//console.log(dbName, email, username, pass);
 
 				var newUser = user({
-					name: name,
 			 		email: email,
 			 		username: username,
 			 		password: pass,
@@ -105,8 +104,9 @@
 				});
 			
 				newUser.save(function(err,o) {
-			  	if (err) 
-			  		callback(null, err);
+			  	if (err) {
+				console.log(newUser);
+			  		callback(null, err); }
 			  		else if(o){
 					// save the user
 				 	 newUser.save();
