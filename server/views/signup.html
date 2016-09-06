@@ -2,15 +2,17 @@
 <html >
   <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
-    <title> <%= title %></title>
-=======
-     <title> <%= title %></title>
->>>>>>> origin/master
-    <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/signup.css">
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+    <link rel="stylesheet" href="css/signup.css">
 
     
     
@@ -19,89 +21,40 @@
 
   <body>
 
-    <div class="form">
-      
-      <ul class="tab-group">
-        <li class="tab active"><a href="#signup">Registro</a></li>
-        <li class="tab"><a href="#login">Login</a></li>
-      </ul>
-      
-      <div class="tab-content">
-        <div id="signup">   
-          <h1>Registro</h1>
-          
-          <form id="signup" action="/signup" method="post">
-          
-          <div class="top-row">
-            <div class="field-wrap">
-              <label>
-                Nombre<span class="req">*</span>
-              </label>
-              <input name="name" type="text" required autocomplete="off" />
-            </div>
-        
-            <div class="field-wrap">
-              <label>
-                Usuario<span class="req">*</span>
-              </label>
-              <input name="username" type="text"required autocomplete="off"/>
-            </div>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Email<span class="req">*</span>
-            </label>
-            <input name="e-mail" type="email"required autocomplete="off"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Contraseña<span class="req">*</span>
-            </label>
-            <input name="pass" type="password"required autocomplete="off"/>
-          </div>
-          
-          <button type="submit" class="button button-block"/>Get Started</button>
-          
-          </form>
-
-        </div>
-        
-        <div id="login">   
-          <h1>Login</h1>
-          
-          <form id="login" action="/login" method="post">
-          
-            <div class="field-wrap">
-            <label>
-              Usuario<span class="req">*</span>
-            </label>
-            <input name="userLogin" type="text"required autocomplete="off"/>
-          </div>
-          
-          <div class="field-wrap">
-            <label>
-              Contraseña<span class="req">*</span>
-            </label>
-            <input name="passLogin" type="password"required autocomplete="off"/>
-          </div>
-          
-          <p class="forgot"><a href="#">Forgot Password?</a></p>
-          
-          <button class="button button-block"/>Log In</button>
-          
-          </form>
-
-        </div>
-        
-      </div><!-- tab-content -->
-      
-</div> <!-- /form -->
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-<script src="/js/libs/jquery.form.js"></script>
-<script src="/js/views/signup.js"></script>
+    <div class="signup__container">
+  
+  <div class="container__child signup__form">
+    <form id="signup" action="/signup" method="post">
+      <div class="form-group">
+        <label for="username">Nombre de usuario</label>
+        <input class="form-control" type="text" name="username" id="username" placeholder="usuarioEjemplo" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="text" name="e-mail" id="email" placeholder="usuarioEjemplo@gmail.com" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input class="form-control" type="password" name="pass" id="password" placeholder="********" required />
+      </div>
+      <div class="form-group">
+        <label for="passwordRepeat">Repite la contraseña</label>
+        <input class="form-control" type="password" name="passwordRepeat" id="passwordRepeat" placeholder="********" required />
+      </div>
+      <div class="m-t-lg">
+        <ul class="list-inline" style="text-align:center;">
+          <li>
+            <input class="btn btn--form" type="submit" value="Crear cuenta" />
+          </li>
+        </ul>
+      </div>
+    </form>  
+  </div>
+</div>
+    
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script src="/js/libs/jquery.form.js"></script>
+		<script src="/js/views/signup.js"></script>
     
     
     

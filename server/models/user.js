@@ -10,10 +10,9 @@
  /*defining schema*/
  var userSchema = new schema({
  
- 	name: String,
- 	email: String,
  	username: { type: String, required: true, unique: true},
  	password: {type: String, required: true, unique: true},
+	email: String,
  	admin: Boolean
 
  });
