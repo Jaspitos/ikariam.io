@@ -26,24 +26,25 @@
 	
       <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
         <label for="username">Nombre de usuario</label>
-        <input class="form-control" type="text" name="username" id="username" placeholder="usuarioEjemplo" maxlength="10" ng-model="user.username" ng-minlength="3">
-        <p ng-show="userForm.username.$error.minlength" class="help-block">El nombre de usuario es demasiado corto</p>
+        <input class="form-control" type="text" name="username" id="username" placeholder="usuarioEjemplo" maxlength="10" ng-model="user.username" ng-minlength="3" required>
+        <p ng-show="userForm.username.$error.minlength" class="help-block">Nombre de usuario demasiado corto</p>
       </div>
 	  
       <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
         <label for="email">Email</label>
-        <input class="form-control" type="email" name="email" id="email" placeholder="" ng-model="user.email"required />
+        <input class="form-control" type="email" validate-email name="email" id="email" placeholder="" ng-model="user.email" required />
 		<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Introduce un email válido</p>
       </div>
 	  
       <div class="form-group">
         <label for="password">Contraseña</label>
-        <input class="form-control" type="password" name="pass" id="password" placeholder="********" required />
+        <input class="form-control" type="password" name="pass" id="pass" placeholder="********" ng-model="user.pass" required />
       </div>
 	  
-      <div class="form-group">
+      <div class="form-group" ng-class="{ 'has-error' : userForm.repass.$invalid && !userForm.repass.$pristine }">
         <label for="passwordRepeat">Repite la contraseña</label>
-        <input class="form-control" type="password" name="repass" id="passwordRepeat" placeholder="********" required />
+        <input class="form-control" type="password" name="repass" id="repass" placeholder="********" ng-model="user.repass" password-confirm="user.pass" required />
+		<p ng-show="userForm.repass.$invalid" class="help-block">Las contraseñas no coinciden</p>		
       </div>
 	  
       <div class="m-t-lg">
