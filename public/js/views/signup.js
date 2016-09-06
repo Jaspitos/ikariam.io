@@ -14,21 +14,6 @@ $(document).ready(function(){
 			console.log(e.responseText);
 		}
 	}); 
-	
-	/*Login form*/
-	$('#login').ajaxForm({
-		beforeSubmit : function(formData, jqForm, options){
-			
-				return true;
-			
-		},
-		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/pedo';
-		},
-		error : function(e){
-			console.log(e.responseText);
-		}
-	}); 
 
 
 });
@@ -44,7 +29,7 @@ $(document).ready(function(){
 
 			// check to make sure the form is completely valid
 			if ($scope.userForm.$valid) {
-				alert('our form is amazing');
+				alert('Bienvenido');
 			}
 
 		};
