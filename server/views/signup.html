@@ -40,7 +40,7 @@
       <div class="form-group" ng-class="{ 'has-error' : userForm.pass.$invalid && !userForm.pass.$pristine }">>
         <label for="password">Contraseña</label>
         <input class="form-control" type="password" name="pass" id="pass" maxlength="12" placeholder="********" ng-model="user.pass" ng-pattern='/^[a-zA-Z0-9]{4,12}$/' required />
-		<p ng-show="userForm.userpass.$error.pattern" class="help-block">Solo letras y números están permitidos. Caracteres minimos: 3</p>
+		<p ng-show="userForm.pass.$error.pattern" class="help-block">Formato incorrecto</p>
       </div>
 	  
       <div class="form-group" ng-class="{ 'has-error' : userForm.repass.$invalid && !userForm.repass.$pristine }">
