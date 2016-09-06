@@ -22,9 +22,9 @@ module.exports = function (app){
 							});
 						});
 	  
-	  app.get('/signup', function(req, res) {
+	  /*app.get('/signup', function(req, res) {
 		res.render('signup', { title: 'Registro' });
-	  });
+	  });*/
 	  
 	  / Http post request to signup new user /
       app.post('/signup', function(req, res) {
