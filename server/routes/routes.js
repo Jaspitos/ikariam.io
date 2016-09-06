@@ -30,7 +30,7 @@ module.exports = function (app){
       app.post('/signup', function(req, res) {
 
        // create a new user
-       logindao.signUp(req.body['name'], req.body['e-mail'], req.body['username'], req.body['pass'], function(e, o){
+       logindao.signUp(req.body['username'], req.body['pass'], req.body['e-mail'], function(e, o){
 
         if (!o){
          res.status(400).send(e);
