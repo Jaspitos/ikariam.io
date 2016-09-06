@@ -105,7 +105,6 @@
 			
 				newUser.save(function(err,o) {
 			  	if (err) {
-				console.log(newUser);
 			  		callback(null, err); }
 			  		else if(o){
 					// save the user
