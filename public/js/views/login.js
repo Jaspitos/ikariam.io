@@ -12,6 +12,7 @@ $(document).ready(function(){
 		},
 		error : function(e){
 			console.log(e.responseText);
+			alert("El usuario o la contraseña es incorrecta")
 		}
 	}); 
 

@@ -27,18 +27,30 @@ module.exports = function (app){
 	  
 	  / Http post request to signup new user /
       app.post('/signup', function(req, res) {
+		
+			logindao.checkUser(req.body['username'],function(er,ob)
+			{
+				if(ob == false)
+				{
+					logindao.checkEmail(req.body['email'],function(err,obb)
+					{
+						if(obb == false)
+						{
+							// create a new user
+							logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o){
+								if (!o){
+								res.status(400).send(e);
+								} else {
+									//mailer.sendEmail(req.body['e-mail']);
+									res.status(200).send(o);
+								}
+							});
+						} else res.status(400).send(err);
+					})
+				} else res.status(400).send(er);
+			})
+       
 
-       // create a new user
-       logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o){
-
-        if (!o){
-         res.status(400).send(e);
-        } else {
-		//mailer.sendEmail(req.body['e-mail']);
-         res.status(200).send(o);
-		}
-       });
-
-      });
+		});
 	  
 };

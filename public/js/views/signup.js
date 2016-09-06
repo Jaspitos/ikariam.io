@@ -11,7 +11,12 @@ $(document).ready(function(){
 			if (status == 'success') window.location.href = '/caca';
 		},
 		error : function(e){
-			console.log(e.responseText);
+		console.log(e);
+		console.log(e.responseText);
+		if(e.responseText === "userExists")
+			alert("El usuario ya existe");
+		if(e.responseText === "emailExists")
+			alert("El email ya está en uso");
 		}
 	}); 
 
@@ -29,7 +34,7 @@ $(document).ready(function(){
 
 			// check to make sure the form is completely valid
 			if ($scope.userForm.$valid) {
-				alert('Bienvenido');
+				//alert('Bienvenido');
 			}
 
 		};

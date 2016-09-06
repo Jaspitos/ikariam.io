@@ -91,6 +91,38 @@
 					}
 				});
 			}
+			
+			exports.checkUser = function(user, callback)
+			{
+				
+				accounts.findOne({username:user}, function(e, o) {
+							
+					if(e){
+						callback(null, e);
+					}
+					else if (o == null){
+						callback(null,false);
+					} else 
+						callback('userExists', true);
+				
+				});
+			}
+			
+			exports.checkEmail = function(mail, callback)
+			{
+				
+				accounts.findOne({email:mail}, function(e, o) {
+							
+					if(e){
+						callback(null, e);
+					}
+					else if (o == null){
+						callback(null,false);
+					} else 
+						callback('emailExists', true);
+				
+				});
+			}
 
 			exports.signUp = function(email, username, pass, callback){
 				//console.log(dbName, email, username, pass);
@@ -102,16 +134,19 @@
 			 		admin: false
 			 		
 				});
-			
+			console.log(accounts.find({username: username}).count());
 				newUser.save(function(err,o) {
-			  	if (err) {
-			  		callback(null, err); }
-			  		else if(o){
-					// save the user
-				 	 newUser.save();
-				 	 mongoose.connection.close();
-				 	 callback(null, 'User created!');
-				 	 }
+			  	if (err) 
+			  		callback(null, err);
+							if(o)	{
+							// save the user
+							newUser.save();
+							mongoose.connection.close();
+							callback(null, 'User created!');
+							}	
+						
+						
+			  		
 
 				});
 
