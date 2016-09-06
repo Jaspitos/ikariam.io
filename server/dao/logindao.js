@@ -22,7 +22,7 @@
 				mongoose.connect('mongodb://localhost/ikariam');
 			}
 			else{
-				mongoose.connect('mongodb://Zaros:soyzaros95@ds021036.mlab.com:21036/ikariam');
+				mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
 			}
 
 			
@@ -36,7 +36,7 @@
 				} 
 				else {
 					if (process.env.NODE_ENV == 'production') {
-						db.authenticate('Zaros', 'soyzaros95', function(e, res) {
+						db.authenticate('devel', 'vivaeta', function(e, res) {
 							if (e) {
 								console.log('mongo :: error: not authenticated', e);
 							}
