@@ -53,6 +53,11 @@ a,
   color: #fff;
 }
 
+.container__child2 {
+  width: 50%;
+  color: #fff;
+}
+
 h1,
 h2 {
   font-weight: 300;

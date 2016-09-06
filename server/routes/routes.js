@@ -5,13 +5,12 @@ module.exports = function (app){
       / Http get request to signup page /
       app.get('/', function(req, res) {
        // create a new user
-       res.render('signup', { title: 'Registro' });
+       res.render('login', { title: 'Entrar' });
       });
+	  
 	  
 	  /* Http post request to submit login */
 	  app.post('/login', function(req, res){
-	  console.log(req.body['userLogin']);
-	  console.log(req.body['passLogin']);
 							logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o){
 								if (!o){
 									res.status(400).send(e);
@@ -22,9 +21,9 @@ module.exports = function (app){
 							});
 						});
 	  
-	  /*app.get('/signup', function(req, res) {
+	  app.get('/signup', function(req, res) {
 		res.render('signup', { title: 'Registro' });
-	  });*/
+	  });
 	  
 	  / Http post request to signup new user /
       app.post('/signup', function(req, res) {
