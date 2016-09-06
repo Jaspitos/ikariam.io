@@ -14,6 +14,7 @@ module.exports = function (app){
 							logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o){
 								if (!o){
 									res.status(400).send(e);
+									console.log("no existe el user");
 								}	else{
 									//req.session.user = o;
 									res.status(200).send(o);
@@ -29,14 +30,18 @@ module.exports = function (app){
       app.post('/signup', function(req, res) {
 
        // create a new user
-       logindao.signUp(req.body['username'], req.body['pass'], req.body['e-mail'], function(e, o){
+       logindao.signUp(req.body['username'], req.body['pass'], req.body['email'], req.body['repass'], function(e, o){
 
         if (!o){
          res.status(400).send(e);
-        } else{
-		 //mailer.sendEmail(req.body['e-mail']);
+		 
+        } else if(req.body['pass'] !== req.body['repass']){
+		 res.status(400).send(e);
+		 console.log("no coinciden las pass");
+        } else {
+		//mailer.sendEmail(req.body['e-mail']);
          res.status(200).send(o);
-        }
+		}
        });
 
       });

@@ -33,46 +33,20 @@ $(document).ready(function(){
 
 });
 
-$('.form').find('input, textarea').on('keyup blur focus', function (e) {
-  
-  var $this = $(this),
-      label = $this.prev('label');
+// create angular app
+	var validationApp = angular.module('validationApp', []);
 
-	  if (e.type === 'keyup') {
-			if ($this.val() === '') {
-          label.removeClass('active highlight');
-        } else {
-          label.addClass('active highlight');
-        }
-    } else if (e.type === 'blur') {
-    	if( $this.val() === '' ) {
-    		label.removeClass('active highlight'); 
-			} else {
-		    label.removeClass('highlight');   
-			}   
-    } else if (e.type === 'focus') {
-      
-      if( $this.val() === '' ) {
-    		label.removeClass('highlight'); 
-			} 
-      else if( $this.val() !== '' ) {
-		    label.addClass('highlight');
+	// create angular controller
+	validationApp.controller('mainController', function($scope) {
+
+		// function to submit the form after all validation has occurred			
+		$scope.submitForm = function() {
+
+			// check to make sure the form is completely valid
+			if ($scope.userForm.$valid) {
+				alert('our form is amazing');
 			}
-    }
 
-});
+		};
 
-$('.tab a').on('click', function (e) {
-  
-  e.preventDefault();
-  
-  $(this).parent().addClass('active');
-  $(this).parent().siblings().removeClass('active');
-  
-  target = $(this).attr('href');
-
-  $('.tab-content > div').not(target).hide();
-  
-  $(target).fadeIn(600);
-  
-});
+	});
