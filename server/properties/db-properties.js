@@ -17,7 +17,7 @@
     },
     production: {
         app: {
-            dbHost: 'ds027215.mlab.com'
+            dbHost: 'ds021036.mlab.com'
         },
         dbPort: '27215',
         dbName: 'ikariam'
