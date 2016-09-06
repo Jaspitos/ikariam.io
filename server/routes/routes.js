@@ -34,10 +34,6 @@ module.exports = function (app){
 
         if (!o){
          res.status(400).send(e);
-		 
-        } else if(req.body['pass'] !== req.body['repass']){
-		 res.status(400).send(e);
-		 console.log("no coinciden las pass");
         } else {
 		//mailer.sendEmail(req.body['e-mail']);
          res.status(200).send(o);
