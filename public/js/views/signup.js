@@ -13,10 +13,15 @@ $(document).ready(function(){
 		error : function(e){
 		console.log(e);
 		console.log(e.responseText);
+		
 		if(e.responseText === "userExists")
 			alert("El usuario ya existe");
+			
 		if(e.responseText === "emailExists")
 			alert("El email ya está en uso");
+			
+		if(e.responseText === "invalidKey")
+			alert("Clave inválida");
 		}
 	}); 
 
@@ -81,3 +86,6 @@ $(document).ready(function(){
     }
   };
 });
+
+
+

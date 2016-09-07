@@ -1,4 +1,5 @@
 var logindao = require('../dao/logindao');
+var k = "";
 
 module.exports = function (app){
 
@@ -23,6 +24,7 @@ module.exports = function (app){
 	  
 	  app.get('/signup', function(req, res) {
 		res.render('signup', { title: 'Registro' });
+		k = req.query.key;
 	  });
 	  
 	  / Http post request to signup new user /
@@ -36,15 +38,23 @@ module.exports = function (app){
 					{
 						if(obb == false)
 						{
-							// create a new user
-							logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o){
-								if (!o){
-								res.status(400).send(e);
-								} else {
-									//mailer.sendEmail(req.body['e-mail']);
-									res.status(200).send(o);
-								}
-							});
+							logindao.checkKey(k, function(error, obj)
+							{
+								if(obj == true)
+								{
+									/*// create a new user
+									logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o){
+										if (!o){
+											res.status(400).send(e);
+										} else {
+											//mailer.sendEmail(req.body['e-mail']);
+											res.status(200).send(o);
+										}
+									});*/
+							
+								} else res.status(400).send(error);
+							})
+							
 						} else res.status(400).send(err);
 					})
 				} else res.status(400).send(er);

@@ -53,6 +53,7 @@
 
 			//Colection we want to play with	
 			var accounts = db.collection('users');
+			var codes = db.collection('codes');
 
 
 			//dao loggin checking cookies
@@ -77,7 +78,7 @@
 						callback(null, e);
 					}
 					else if (o == null){
-						callback('Invalid credentials');
+						callback('invalidLogin');
 						
 				
 					}	else{
@@ -85,7 +86,7 @@
 							if (res){
 								callback(null, o);
 							}	else{
-								callback('Invalid credentials');
+								callback('invalidLogin');
 							}
 						});
 					}
@@ -95,8 +96,7 @@
 			exports.checkUser = function(user, callback)
 			{
 				
-				accounts.findOne({username:user}, function(e, o) {
-							
+				accounts.findOne({username:user}, function(e, o) {	
 					if(e){
 						callback(null, e);
 					}
@@ -112,7 +112,6 @@
 			{
 				
 				accounts.findOne({email:mail}, function(e, o) {
-							
 					if(e){
 						callback(null, e);
 					}
@@ -120,6 +119,34 @@
 						callback(null,false);
 					} else 
 						callback('emailExists', true);
+				
+				});
+			}
+			
+			exports.checkKey = function(clave, callback)
+			{
+				
+				codes.findOne({key:clave}, function(e, o) {
+					if(e){
+						callback(null, e);
+					}
+					else if (o == null){
+						callback('invalidKey', false);
+					} else 
+						{
+							if(clave != "zaroskey")
+							{
+								try{
+									codes.deleteOne( {"key":clave } );
+									callback(null,true);
+								}
+								catch(e) { console.log(e); }
+								
+							} else callback(null,true);
+								
+						}
+						
+						
 				
 				});
 			}
@@ -134,7 +161,7 @@
 			 		admin: false
 			 		
 				});
-			console.log(accounts.find({username: username}).count());
+			
 				newUser.save(function(err,o) {
 			  	if (err) 
 			  		callback(null, err);
