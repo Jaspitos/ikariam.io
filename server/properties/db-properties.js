@@ -19,7 +19,7 @@
         app: {
             dbHost: 'ds021036.mlab.com'
         },
-        dbPort: '27215',
+        dbPort: '21036',
         dbName: 'ikariam'
    }
 };
