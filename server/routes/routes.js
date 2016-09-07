@@ -42,7 +42,7 @@ module.exports = function (app){
 							{
 								if(obj == true)
 								{
-									/*// create a new user
+									// create a new user
 									logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o){
 										if (!o){
 											res.status(400).send(e);
@@ -50,7 +50,7 @@ module.exports = function (app){
 											//mailer.sendEmail(req.body['e-mail']);
 											res.status(200).send(o);
 										}
-									});*/
+									});
 							
 								} else res.status(400).send(error);
 							})
