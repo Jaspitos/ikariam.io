@@ -1,2 +1,5 @@
 # Node_modules
 node_modules/
+
+# BBDD
+server/properties/db-properties.js
