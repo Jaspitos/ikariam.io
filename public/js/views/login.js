@@ -8,7 +8,7 @@ $(document).ready(function(){
 			
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/pedo';
+			if (status == 'success') window.location.href = '/inicio';
 		},
 		error : function(e){
 			console.log(e.responseText);

@@ -62,5 +62,10 @@ module.exports = function (app){
        
 
 		});
+		
+		app.get('/inicio', function(req, res) {
+       // create a new user
+       res.render('inicio', { title: 'Inicio' });
+      });
 	  
 };
