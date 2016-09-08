@@ -1,9 +1,10 @@
 var logindao = require('../dao/logindao');
-var k = "";
+var k = null;
 
 module.exports = function (app){
+	
 
-      / Http get request to signup page /
+
       app.get('/', function(req, res) {
        // create a new user
        res.render('login', { title: 'Entrar' });

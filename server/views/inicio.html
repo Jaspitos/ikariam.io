@@ -1,10 +1,11 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/materialize.css">
-							<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-		<!--<link rel="stylesheet" type="text/css" href="css/inicio.css">!-->
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		
+	
 	</head>
 	<body>
 		<nav>
@@ -30,11 +31,32 @@
 					          </div>
 					        </nav>
 
+		<div class="container">
+		<!-- Page Content goes here -->
+		<div class="row">
 		
-		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<!-- Columna izquierda del contenido -->
+		<div class="col l4 m6 s4">
+		 <ul id="messages"></ul>
+		<form action="">
+		  <input id="m" autocomplete="off" /><button>Send</button>
+		</form>
+		</div>
+		
+		<!-- Columna derecha del contenido -->
+		<div class="col l8 m6 s8">
+		Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
+		</div>
+		
+		</div>
+		
+		</div>
+		
+		  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		
 		<script src="/js/libs/materialize.js"></script>
-		<!--<script src="/js/views/logout.js"></script> !-->
-<script>
+						<script>
 						 $(".button-collapse").sideNav();
 						  $('.dropdown-button').dropdown({
 						      inDuration: 300,
@@ -47,7 +69,19 @@
 						    }
 						  );
 		        
-						 </script>
+		 </script>
+		 <script>
+		  var socket = io();
+		  $('form').submit(function(){
+			socket.emit('chat message', $('#m').val());
+			$('#m').val('');
+			return false;
+		  });
+		  socket.on('chat message', function(msg){
+			$('#messages').append($('<li>').text(msg));
+			console.log(msg);
+		  });
+		</script>
 
 						 
 	</body>
