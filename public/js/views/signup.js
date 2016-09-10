@@ -2,31 +2,34 @@ $(document).ready(function(){
 
 
 	$('#signup').ajaxForm({
-		beforeSubmit : function(formData, jqForm, options){	
-			
+		beforeSubmit : function(formData, jqForm, options){
+
 			return true;
-			
+
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') window.location.href = '/caca';
+			if (status == 'success') window.location.href = '/';
 		},
 		error : function(e){
 		console.log(e);
 		console.log(e.responseText);
-		
+
 		if(e.responseText === "userExists")
 			alert("El usuario ya existe");
-			
+
 		if(e.responseText === "emailExists")
 			alert("El email ya está en uso");
-			
+
 		if(e.responseText === "invalidKey")
 			alert("Clave inválida");
 		}
-	}); 
+	});
 
 
 });
+
+	var query = window.location.search.substring(5);
+	$('#keyp').val(query);
 
 // create angular app
 	var validationApp = angular.module('validationApp', []);
@@ -34,7 +37,7 @@ $(document).ready(function(){
 	// create angular controller
 	validationApp.controller('mainController', function($scope) {
 
-		// function to submit the form after all validation has occurred			
+		// function to submit the form after all validation has occurred
 		$scope.submitForm = function() {
 
 			// check to make sure the form is completely valid
@@ -45,7 +48,7 @@ $(document).ready(function(){
 		};
 
 	});
-	
+
 	angular.module('validationApp').directive("passwordConfirm", function() {
     "use strict";
     return {
@@ -86,6 +89,3 @@ $(document).ready(function(){
     }
   };
 });
-
-
-

@@ -56,9 +56,8 @@ app.use(cookieParser());
  	//TODO: Opens session
  	app.use(session({
  	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
- 	proxy: true,
- 	resave: true,
- 	saveUninitialized: true,
+ 	resave: false,
+ 	saveUninitialized: false,
  	store: new MongoStore({ url: dbURL })
  	})
  	);

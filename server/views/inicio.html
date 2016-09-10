@@ -2,32 +2,13 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+  	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <style>
-        .container {
-            margin-top: 15px;
-        }
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        #messages li {
-            padding: 5px 10px;
-        }
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
-        div.scroll {
-            background-color: #00FFFF;
-            width: 100%;
-            height: 150px;
-            overflow: auto;
-        }
-    </style>
 </head>
 
 <body>
@@ -53,7 +34,7 @@
                     <li><a href="#!">L</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="#!">P</a>
+                    <li><a id="logout" href="#!">Cerrar sesión</a>
                     </li>
                 </ul>
             </ul>
@@ -87,32 +68,21 @@
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-
     <script src="/js/libs/materialize.js"></script>
+    <script src="/js/views/logout.js"></script>
+    <script src="/js/views/chat.js"></script>
     <script>
-        $(".button-collapse").sideNav();
         $('.dropdown-button').dropdown({
             inDuration: 300,
             outDuration: 225,
-            constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: true, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
+            constrain_width: false,
+            hover: true,
+            gutter: 0,
+            belowOrigin: false,
+            alignment: 'left'
         });
     </script>
-    <script>
-        var socket = io();
-        $('form').submit(function() {
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        socket.on('chat message', function(msg) {
-            $('#messages').append($('<li>').text(msg));
-            console.log(msg);
-        });
-    </script>
+
 
 
 </body>
