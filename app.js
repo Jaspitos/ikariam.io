@@ -49,6 +49,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  	dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
  	}
 
+
 	//Defining session variable
 	var sessionMiddleware = session({
 	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
