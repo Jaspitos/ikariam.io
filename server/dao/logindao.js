@@ -1,8 +1,8 @@
-/**
+			/**
 			 * @Author: Javier
 			 * @Desc: Login data access object
 			 */
-			
+
 			/*Instance of needed modules*/
 			var MongoDB 	= require('mongodb').Db;
 			var mongoose 	= require('mongoose');
@@ -13,10 +13,10 @@
 			console.log('Entorno elegido  '+process.env.NODE_ENV);
 
 			dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-			
 
 
-			/*Check enviromemnt*/ 	
+
+			/*Check enviromemnt*/
 			if(process.env.NODE_ENV == 'development')
 			{
 				mongoose.connect('mongodb://localhost/ikariam');
@@ -25,15 +25,15 @@
 				mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
 			}
 
-			
+
 
 			/* establish the database connection */
 			var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {auto_reconnect: true}), {w: 1});
-				
+
 				db.open(function(e, d){
 				if (e) {
 			console.log(e);
-				} 
+				}
 				else {
 					if (process.env.NODE_ENV == 'production') {
 						db.authenticate('devel', 'vivaeta', function(e, res) {
@@ -51,14 +51,14 @@
 			});
 
 
-			//Colection we want to play with	
+			//Colection we want to play with
 			var accounts = db.collection('users');
 			var codes = db.collection('codes');
 
 
 			//dao loggin checking cookies
 			exports.autoLogin = function(user, pass, callback){
-				
+
 				accounts.findOne({username:user},function(e,o){
 					if (o){
 						o.password == pass ? callback(o) : callback(null);
@@ -71,16 +71,16 @@
 			//dao login when we use manual logins
 			exports.manualLogin = function(user, pass, callback)
 			{
-				
+
 				accounts.findOne({username:user}, function(e, o) {
-							
+
 					if(e){
 						callback(null, e);
 					}
 					else if (o == null){
 						callback('invalidLogin');
-						
-				
+
+
 					}	else{
 						validatePassword(pass, o.password, function(err, res) {
 							if (res){
@@ -92,47 +92,47 @@
 					}
 				});
 			}
-			
+
 			exports.checkUser = function(user, callback)
 			{
-				
-				accounts.findOne({username:user}, function(e, o) {	
+
+				accounts.findOne({username:user}, function(e, o) {
 					if(e){
 						callback(null, e);
 					}
 					else if (o == null){
 						callback(null,false);
-					} else 
+					} else
 						callback('userExists', true);
-				
+
 				});
 			}
-			
+
 			exports.checkEmail = function(mail, callback)
 			{
-				
+
 				accounts.findOne({email:mail}, function(e, o) {
 					if(e){
 						callback(null, e);
 					}
 					else if (o == null){
 						callback(null,false);
-					} else 
+					} else
 						callback('emailExists', true);
-				
+
 				});
 			}
-			
+
 			exports.checkKey = function(clave, callback)
 			{
-				
+
 				codes.findOne({key:clave}, function(e, o) {
 					if(e){
 						callback(null, e);
 					}
 					else if (o == null){
 						callback('invalidKey', false);
-					} else 
+					} else
 						{
 							if(clave != "zaroskey")
 							{
@@ -141,13 +141,13 @@
 									callback(null,true);
 								}
 								catch(e) { console.log(e); }
-								
+
 							} else callback(null,true);
-								
+
 						}
-						
-						
-				
+
+
+
 				});
 			}
 
@@ -159,21 +159,21 @@
 			 		username: username,
 			 		password: pass,
 			 		admin: false
-			 		
+
 				});
-			
+
 				newUser.save(function(err,o) {
-			  	if (err) 
+			  	if (err)
 			  		callback(null, err);
 							if(o)	{
 							// save the user
 							newUser.save();
 							mongoose.connection.close();
 							callback(null, 'User created!');
-							}	
-						
-						
-			  		
+							}
+
+
+
 
 				});
 
@@ -190,9 +190,9 @@
 					callback(null);
 				})
 
-				
+
 			}
-		    
+
 
 
 

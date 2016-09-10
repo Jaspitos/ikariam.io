@@ -1,4 +1,3 @@
-
 /**
  *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
@@ -17,25 +16,23 @@ var io = require('socket.io')(http);
 
 
 //Defining eviroment variables
-
 if(app.get('env') == 'development')
 	process.env.NODE_ENV = 'development';
 		else
 			process.env.NODE_ENV = 'production';
 
+
+
 //App settings
-
-
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'html');
 app.set('view cache', true);
 
+//
 app.engine('html', require('ejs').renderFile);
 
-/*
-  Defining App use
- */
+//Defining App use
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,21 +50,29 @@ app.use(cookieParser());
  	dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
  	}
 
- 	//TODO: Opens session
- 	app.use(session({
- 	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
- 	resave: false,
- 	saveUninitialized: false,
- 	store: new MongoStore({ url: dbURL })
- 	})
- 	);
+	//Defining session variable
+	var sessionMiddleware = session({
+	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+	resave: false,
+	saveUninitialized: false,
+	cookie: {maxAge:86400000},
+	store: new MongoStore({ url: dbURL })
+	});
+
+	io.use(function(socket, next) {
+	    sessionMiddleware(socket.request, socket.request.res, next);
+	});
+
+	app.use(sessionMiddleware);
+
  //Module of routes conf
  require('./server/routes/routes')(app);
 
  //Starts general Chat
  io.on('connection', function(socket){
+	 console.log("USARIO ESCRIBE" + socket.request.session.user);
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    io.emit('chat message',socket.request.session.user+"   :" +msg);
   });
 });
 
