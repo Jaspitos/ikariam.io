@@ -1,6 +1,6 @@
 
 /**
- *@Author: Javier y Lorenzo
+ *@Author: Javier
  *@Desc: Starts up web app
  */
 
@@ -39,7 +39,6 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 
  	dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
@@ -58,6 +57,7 @@ app.use(cookieParser());
  	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
  	resave: false,
  	saveUninitialized: false,
+	cookie : {maxAge: 86400000},
  	store: new MongoStore({ url: dbURL })
  	})
  	);

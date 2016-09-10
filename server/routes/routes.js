@@ -1,5 +1,5 @@
 /**
- *@Author:Lorenzo y Javier Gay
+ *@Author:Javier
  *@Desc:Defines http routes
  */
 
@@ -14,7 +14,7 @@ module.exports = function(app) {
     // attempt automatic login //
     logindao.autoLogin(req.session.user, req.session.passwd, function(o){
       if (o){
-         res.render('inicio', {title:"Inicio"});
+         res.render('inicio', {title:"Inicio", usrName: req.session.user});
       }	else{
         res.render('login', { title: 'Entrar' });
       }
@@ -25,16 +25,19 @@ module.exports = function(app) {
   /* Http post request to submit login */
   app.post('/', function(req, res){
             logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o){
-              console.log(req.body.userLogin);
-              console.log(o);
               if (!o){
                 res.status(400).send(e);
               }	else{
+                  if(req.session.user == null || req.session.user == undefined)
+                  {
+                    req.session.user = o.username;
+                    req.session.passwd = o.password;
+                    //res.cookie('user', o.username, { maxAge: 900000 });
+                    res.status(200).send(o);
+                  }
+                  else
+                  res.status(200).send(0);
 
-                req.session.user = o.username;
-                req.session.passwd = o.password;
-                //res.cookie('user', o.username, { maxAge: 900000 });
-                res.status(200).send(o);
               }
             });
           });
@@ -56,7 +59,6 @@ module.exports = function(app) {
                                     if (!o) {
                                         res.status(400).send(e);
                                     } else {
-                                        //mailer.sendEmail(req.body['e-mail']);
                                         res.status(200).send(o);
                                     }
                                 });
@@ -76,10 +78,15 @@ module.exports = function(app) {
 
 		app.get('/inicio', function(req, res) {
        // create a new user
-       console.log(req.session);
-       res.render('inicio', { title: 'Inicio' });
+       res.render('inicio', {title: 'Inicio' });
 
       });
+
+      app.get('/chat', function(req, res) {
+         // create a new user
+         res.render('chat', {title: 'Chat'});
+
+        });
 
       app.post('/logout', function(req, res){
         req.session.destroy(function(e) {res.status(200).send('deleted'); });
