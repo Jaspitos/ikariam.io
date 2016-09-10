@@ -2,7 +2,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <link rel="stylesheet" type="text/css" href="css/inicio.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
   	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
@@ -13,7 +13,7 @@
 
 <body>
     <nav>
-        <div class="nav-wrapper amber darken-2 ">
+        <div class="nav-wrapper amber accent-4">
             <a href="/" class="brand-logo" style="left:20px;">Sebastián</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
@@ -21,17 +21,12 @@
                 </li>
                 <li><a href="/play">Herramientas</a>
                 </li>
-                <li><a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="dropdown1"><i class="material-icons right">arrow_drop_down</i></a>
+                <li><a class="dropdown-button  amber orange" href="#!" data-activates="dropdown1">Bienvenido, <%= usrName %><i class="material-icons right">arrow_drop_down</i></a>
                 </li>
                 <!-- Dropdown Structure -->
                 <ul id='dropdown1' class='dropdown-content'>
-                    <li><a id="btn-logout">H</a>
-                    </li>
                     <li class="divider"></li>
-                    <li><a href="#!">E</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="#!">L</a>
+                    <li><a href="#!">Ajustes (en construcción)</a>
                     </li>
                     <li class="divider"></li>
                     <li><a id="logout" href="#!">Cerrar sesión</a>
@@ -42,24 +37,27 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="margin-top:15%; margin-bottom:15%; height: 100%; ">
         <!-- Page Content goes here -->
         <div class="row">
 
             <!-- Columna izquierda del contenido -->
             <div class="col l4 m6 s4">
-                <div class="scroll">
-                    <ul id="messages"></ul>
+                <div style="background-color: green; height: 20%">
+                  asdd
                 </div>
-                <form action="">
-                    <input id="m" autocomplete="off" style="font-family:'Open sans'" />
-                    <button class="btn waves-effect waves-light">Send</button>
-                </form>
+                <div style="background-color: yellow; height: 20%">
+                  asdd
+                </div>
+                <div style="background-color: blue; height: 20%">
+                  asdd
+                </div>
+
             </div>
 
             <!-- Columna derecha del contenido -->
-            <div class="col l8 m6 s8">
-                Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
+            <div class="col l8 m6 s8" style="background-color: orange; height: 100%" >
+                Lorem Ipsum es simplemente el texto de rell
             </div>
 
         </div>
@@ -78,8 +76,8 @@
             constrain_width: false,
             hover: true,
             gutter: 0,
-            belowOrigin: false,
-            alignment: 'left'
+            belowOrigin: true,
+            alignment: 'right'
         });
     </script>
 

@@ -1,5 +1,5 @@
 /**
- *@Author: Javier y Lorenzo
+ *@Author: Javier
  *@Desc: Starts up web app
  */
 
@@ -36,7 +36,6 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 
  	dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
@@ -70,7 +69,6 @@ app.use(cookieParser());
 
  //Starts general Chat
  io.on('connection', function(socket){
-	 console.log("USARIO ESCRIBE" + socket.request.session.user);
   socket.on('chat message', function(msg){
     io.emit('chat message',socket.request.session.user+"   :" +msg);
   });
