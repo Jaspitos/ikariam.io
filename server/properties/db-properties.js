@@ -1,8 +1,9 @@
 /*
-     *@Author: Javier G
+
+     *@Author: Javier
      *@Desc: Enviroment variables for db set-up
      */
-	 
+
  	var dbHost = process.env.DB_HOST  || 'localhost';
 	var dbPort = process.env.DB_PORT  || 27017;
  	var dbName = process.env.DB_NAME  || 'ikariam';
