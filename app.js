@@ -71,7 +71,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  //Starts general Chat
  io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    io.emit('chat message',socket.request.session.user+"   :" +msg);
+    io.emit('chat message',socket.request.session.user+": " +msg);
   });
 });
 
