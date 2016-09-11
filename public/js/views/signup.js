@@ -15,13 +15,16 @@ $(document).ready(function(){
 		console.log(e.responseText);
 
 		if(e.responseText === "userExists")
-			alert("El usuario ya existe");
+			//alert("El usuario ya existe");
+			Materialize.toast("El usuario ya existe", 5000);
 
 		if(e.responseText === "emailExists")
-			alert("El email ya está en uso");
+			//alert("El email ya está en uso");
+			Materialize.toast("El email ya está en uso", 5000);
 
 		if(e.responseText === "invalidKey")
-			alert("Clave inválida");
+			//alert("Clave inválida");
+			Materialize.toast("Clave inválida", 5000);
 		}
 	});
 

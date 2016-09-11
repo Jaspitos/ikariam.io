@@ -12,8 +12,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
-
-
+var chalk = require('chalk');
 
 //Defining eviroment variables
 if(app.get('env') == 'development')
@@ -21,7 +20,7 @@ if(app.get('env') == 'development')
 		else
 			process.env.NODE_ENV = 'production';
 
-
+console.log('Entorno elegido  ' + "----> "+chalk.bold.red(process.env.NODE_ENV));
 
 //App settings
 app.set('port', process.env.PORT || 3000);
@@ -77,5 +76,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Starts server
  http.listen(app.get('port'), function(){
- console.log('Express server listening on port ' + app.get('port'));
+ console.log(chalk.bgBlue('Express server listening on port ' + app.get('port')));
  });

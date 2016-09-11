@@ -1,18 +1,89 @@
-<!doctype html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="css/chat.css">
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Enviar</button>
-    </form>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/chat.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+  	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper amber accent-4">
+            <a href="/" class="brand-logo" style="left:20px;">Sebastián</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/tools">Foro</a>
+                </li>
+                <li><a href="/play">Herramientas</a>
+                </li>
+                <li><a class="dropdown-button  amber orange" href="#!" data-activates="dropdown1">Bienvenido<i class="material-icons right">arrow_drop_down</i></a>
+                </li>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li class="divider"></li>
+                    <li><a href="#!">Ajustes (en construcción)</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a id="logout" href="#!">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top:5%; margin-bottom:5%; height: 100%; ">
+        <!-- Page Content goes here -->
+        <div class="row">
+
+            <!-- Columna izquierda del contenido -->
+            <div class="col l8 m6 s8">
+                <div class="z-depth-1" style="height: 60%">
+                  <div id="chat">
+                    <ul id="messages"></ul>
+
+                  </div>
+                </div>
+                <form action="">
+                  <input id="m" autocomplete="off" /><button class="waves-effect waves-light btn">Enviar</button>
+                </form>
+            </div>
+
+            <!-- Columna derecha del contenido -->
+            <div class="col l4 m6 s4">
+              <div class="z-depth-2" style="height: 30%">
+                Usuarios Conectados
+              </div>
+            </div>
+
+        </div>
+
+    </div>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/js/libs/materialize.js"></script>
+    <script src="/js/views/logout.js"></script>
     <script src="/js/views/chat.js"></script>
+    <script>
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false,
+            hover: true,
+            gutter: 0,
+            belowOrigin: true,
+            alignment: 'right'
+        });
+    </script>
 
-  </body>
+
+
+</body>
+
 </html>

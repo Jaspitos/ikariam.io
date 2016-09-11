@@ -10,7 +10,7 @@
 			var Server 		= require('mongodb').Server;
 			var dbprop 		= require('../properties/db-properties');
 
-			console.log('Entorno elegido  '+process.env.NODE_ENV);
+		
 
 			dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
 
