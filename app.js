@@ -1,5 +1,5 @@
 /**
- *@Author: Javier
+ *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
  */
 
@@ -13,6 +13,8 @@ var MongoStore = require('connect-mongo')(session);
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
 var chalk = require('chalk');
+
+var allClients = [];
 
 //Defining eviroment variables
 if(app.get('env') == 'development')
@@ -69,12 +71,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
  //Starts general Chat
  io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message',socket.request.session.user+": " +msg);
+	 //Defining message object to be send to client chat
+	 var user = socket.request.session.user;
+	  io.emit('newConnection',user);
+
+    socket.on('chat message', function(msg){
+		var text = msg;
+    io.emit('chat message',{user,text});
   });
 });
 
-//Starts server
+ //Starts server
  http.listen(app.get('port'), function(){
  console.log(chalk.bgBlue('Express server listening on port ' + app.get('port')));
  });
