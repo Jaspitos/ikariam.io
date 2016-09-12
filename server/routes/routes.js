@@ -56,8 +56,11 @@ module.exports = function(app) {
                                 // create a new user
                                 logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
                                     if (!o)
-                                      console.log("error: "+e);
+                                    {
+                                      console.log("error 1: "+e);
                                         res.status(400).send(e);
+                                    }
+
                                      else
                                         res.status(200).send(o);
 
