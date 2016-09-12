@@ -14,12 +14,24 @@
     socket.on('chat message', function(msg) {
         $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));
     });
-    socket.on('newConnection', function(msg) {
-        $('#messages').append($('<li>').text("Se conecto el usuario : "+msg).css('font-style','italic'));
-        $('#userlist').append($('<li>').text(msg));
 
+    socket.on('newConnection', function(msg, clientes) {
 
+        $('#messages').append($('<li>').text(msg+ " se ha conectado.").css('font-style','italic'));
+        $('#userlist').empty();
+        $.each(clientes, function(index, value){
+            $('#userlist').append($('<li>').text(value));
+        })
     });
+
+    socket.on('disconnect', function(msg, clientes) {
+      $('#messages').append($('<li>').text(msg+" se ha desconectado.").css('font-style','italic'));
+      $('#userlist').empty();
+      $('#userlist').append($('<li>').text(clientes));
+      //$('#userlist').find('li:contains('+msg+')').remove();
+
+
+      });
 
 
     $("#custom").spectrum({

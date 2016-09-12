@@ -13,7 +13,6 @@ var MongoStore = require('connect-mongo')(session);
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
 var chalk = require('chalk');
-
 var allClients = [];
 
 //Defining eviroment variables
@@ -73,12 +72,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
  io.on('connection', function(socket){
 	 //Defining message object to be send to client chat
 	 var user = socket.request.session.user;
-	  io.emit('newConnection',user);
+	 allClients.unshift(user);
+
+	  io.emit('newConnection', user, allClients);
 
     socket.on('chat message', function(msg){
-		var text = msg;
-    io.emit('chat message',{user,text});
-  });
+			var text = msg;
+    	io.emit('chat message', {user, text});
+  	});
+
+		socket.on('disconnect', function() {
+			allClients.splice(allClients.indexOf(user), 1);
+			io.emit('disconnect', user, allClients);
+		})
 });
 
  //Starts server
