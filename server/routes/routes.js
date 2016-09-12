@@ -78,13 +78,13 @@ module.exports = function(app) {
 
 		app.get('/inicio', function(req, res) {
        // create a new user
-       res.render('inicio', {title: 'Inicio' });
+       res.render('inicio', {title: 'Inicio', usrName: req.session.user});
 
       });
 
       app.get('/chat', function(req, res) {
          // create a new user
-         res.render('chat', {title: 'Chat'});
+         res.render('chat', {title: 'Chat', usrName: req.session.user});
 
         });
 
