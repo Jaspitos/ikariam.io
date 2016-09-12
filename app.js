@@ -3,6 +3,7 @@
  *@Desc: Starts up web app
  */
 
+//Importing modules
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -14,6 +15,7 @@ var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
 var chalk = require('chalk');
 
+//Clients list connection
 var allClients = [];
 
 //Defining eviroment variables
@@ -72,12 +74,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
  //Starts general Chat
  io.on('connection', function(socket){
 	 //Defining message object to be send to client chat
-	 var user = socket.request.session.user;
+	  var user = socket.request.session.user;
+		allClients.push(user);
 	  io.emit('newConnection',user);
 
     socket.on('chat message', function(msg){
 		var text = msg;
     io.emit('chat message',{user,text});
+  });
+
+	  socket.on('disconnect', function () {
+      io.emit('disconnected',user);
+			allClients.indexOf(user);
   });
 });
 

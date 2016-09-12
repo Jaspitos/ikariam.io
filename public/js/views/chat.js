@@ -12,15 +12,17 @@
     });
 
     socket.on('chat message', function(msg) {
-        $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));
+        $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));//Writes socket message
+        $('#chatparent').scrollTop(1000000);//Focus the scroll to bottom side
     });
     socket.on('newConnection', function(msg) {
-        $('#messages').append($('<li>').text("Se conecto el usuario : "+msg).css('font-style','italic'));
-        $('#userlist').append($('<li>').text(msg));
-
-
+        $('#messages').append($('<li>').text("Se conecto el usuario : "+msg).css('font-style','italic'));//Writes connection message
+        $('#userlist').append($('<li>').text(msg));//User connection is added to userlist
     });
 
+    socket.on('disconnected', function(msg) {
+        $('#messages').append($('<li>').text("Se desconecto el usuario : "+msg).css('font-style','italic'));//Writes connection message
+    });
 
     $("#custom").spectrum({
     color: "#f00"
