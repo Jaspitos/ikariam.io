@@ -8,7 +8,7 @@ var logindao = require('../dao/logindao');
 
 module.exports = function(app) {
 
-  / Http get request to signup page /
+  /*Http get request to signup page*/
   app.get('/', function(req, res) {
 
     // attempt automatic login //

@@ -1,5 +1,5 @@
 /**
- *@Author: Javier y Lorenzo el becario
+ *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
  */
 
@@ -61,11 +61,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 	store: new MongoStore({ url: dbURL })
 	});
 
+	app.use(sessionMiddleware);
+
+	//Une sessions con socket.io
 	io.use(function(socket, next) {
 	    sessionMiddleware(socket.request, socket.request.res, next);
 	});
 
-	app.use(sessionMiddleware);
+
 
  //Module of routes conf
  require('./server/routes/routes')(app);
