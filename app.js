@@ -76,7 +76,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 	 var user = socket.request.session.user;
 	 var yaExiste = false;
-	 var rejected = false;
 
 	 if(allClients.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
 	 {

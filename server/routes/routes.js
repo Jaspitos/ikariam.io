@@ -28,15 +28,14 @@ module.exports = function(app) {
               if (!o){
                 res.status(400).send(e);
               }	else{
-                  if(req.session.user == null || req.session.user == undefined)
-                  {
+                  if(req.session.user == o.username && req.session.passwd == o.password)
+                    res.status(200).send(o);
+                  else{
                     req.session.user = o.username;
                     req.session.passwd = o.password;
-                    //res.cookie('user', o.username, { maxAge: 900000 });
                     res.status(200).send(o);
                   }
-                  else
-                  res.status(200).send(0);
+
 
               }
             });
