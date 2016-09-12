@@ -1,5 +1,5 @@
     /**
-     *@Authors: Lorenzo y Javier
+     *@Authors: Javier y Lorenzo
      *@Desc: Creates sockets communication with server-side
      */
 
@@ -15,15 +15,29 @@
         $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));//Writes socket message
         $('#chatparent').scrollTop(1000000);//Focus the scroll to bottom side
     });
-    socket.on('newConnection', function(msg) {
-        $('#messages').append($('<li>').text("Se conecto el usuario : "+msg).css('font-style','italic'));//Writes connection message
-        $('#userlist').append($('<li>').text(msg));//User connection is added to userlist
+
+    socket.on('newConnection', function(usr, clientes) {
+        $('#messages').append($('<li>').text(usr+ " se ha conectado.").css('font-style','italic'));
+        $('#userlist').empty();
+        $.each(clientes, function(index, value){
+            $('#userlist').append($('<li>').text(value));
+        })
     });
 
-    socket.on('disconnected', function(msg) {
-        $('#messages').append($('<li>').text("Se desconecto el usuario : "+msg).css('font-style','italic'));//Writes connection message
-    });
+    socket.on('disconnect', function(msg, clientes) {
+      if(msg != 'io server disconnect')
+      {
+        $('#messages').append($('<li>').text(msg+" se ha desconectado.").css('font-style','italic'));
+        $('#userlist').empty();
+        $.each(clientes, function(index, value){
+            $('#userlist').append($('<li>').text(value));
+          })
+      }
+      else
+        $('#messages').append($('<li>').text("Conexión rechazada: ya estás dentro del chat").css('font-style','italic'));
+
+      });
 
     $("#custom").spectrum({
-    color: "#f00"
+        color: "#f00"
     });

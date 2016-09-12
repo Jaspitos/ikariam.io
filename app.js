@@ -1,5 +1,5 @@
 /**
- *@Author: Javier y Lorenzo
+ *@Author: Javier y Lorenzo el becario
  *@Desc: Starts up web app
  */
 
@@ -52,7 +52,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
  	dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
  	}
 
-
 	//Defining session variable
 	var sessionMiddleware = session({
 	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
@@ -74,19 +73,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
  //Starts general Chat
  io.on('connection', function(socket){
 	 //Defining message object to be send to client chat
-	  var user = socket.request.session.user;
-		allClients.push(user);
-	  io.emit('newConnection',user);
+
+	 var user = socket.request.session.user;
+	 var yaExiste = false;
+	 var rejected = false;
+
+	 if(allClients.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
+	 {
+		 allClients.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
+		 io.emit('newConnection', user, allClients);
+	 }
+	 else
+	 {
+		 yaExiste = true;
+		 socket.disconnect();
+	 }
+
 
     socket.on('chat message', function(msg){
-		var text = msg;
-    io.emit('chat message',{user,text});
-  });
+				var text = msg;
+    		io.emit('chat message', {user, text});
+  	});
 
-	  socket.on('disconnect', function () {
-      io.emit('disconnected',user);
-			allClients.indexOf(user);
-  });
+		socket.on('disconnect', function() {
+			if(!yaExiste)
+				allClients.splice(allClients.indexOf(user), 1);
+
+				io.emit('disconnect', user, allClients);
+		});
+
 });
 
  //Starts server
