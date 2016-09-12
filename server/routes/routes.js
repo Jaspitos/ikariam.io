@@ -55,11 +55,12 @@ module.exports = function(app) {
                             if (obj == true) {
                                 // create a new user
                                 logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
-                                    if (!o) {
+                                    if (!o)
+                                      console.log("error: "+e);
                                         res.status(400).send(e);
-                                    } else {
+                                     else
                                         res.status(200).send(o);
-                                    }
+
                                 });
 
                             } else res.status(400).send(error);
