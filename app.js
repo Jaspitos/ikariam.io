@@ -1,5 +1,5 @@
 /**
- *@Author: Javier y Lorenzo
+ *@Author: Javier css trainer y Lorenzo el becario
  *@Desc: Starts up web app
  */
 

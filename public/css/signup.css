@@ -147,24 +147,3 @@ label {
   bottom: 8%;
   left: 45%;
 }
-
-#toast-containerUser {
-  top: auto !important;
-  right: auto !important;
-  bottom: 4%;
-  left:45%;
-}
-
-#toast-containerEmail {
-  top: auto !important;
-  right: auto !important;
-  bottom: 8%;
-  left:43%;
-}
-
-#toast-containerKey {
-  top: auto !important;
-  right: auto !important;
-  bottom: 8%;
-  left:43%;
-}
