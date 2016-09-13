@@ -1,1 +1,2 @@
-# ikariam.io
+# ikariam.io  
+## Authors: Lorenzo y Javier
