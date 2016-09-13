@@ -5,6 +5,7 @@
 
     var socket = io('/chatNsp');
     var sound = $('.playSound');
+    sound.trigger('load');
 
     $('form').submit(function() {
         var chosen_color = $('.sp-preview-inner').css("background-color");
@@ -15,10 +16,11 @@
 
     socket.on('chat message', function(msg) {
         $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));//Writes socket message
-        sound.trigger('load');
-        sound.trigger('play');
+        if(msg.text.message == "pedo")
+          sound.trigger('play');
+
         $('#chatparent').scrollTop(1000000);//Focus the scroll to bottom side
-        setTimeout(function() {sound.trigger('pause'); sound.prop("currentTime", 0);}, 1120);
+        setTimeout(function() {sound.trigger('pause'); sound.prop("currentTime", 0);}, 900);
     });
 
     socket.on('newConnection', function(usr, clientes) {
