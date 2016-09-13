@@ -20,11 +20,11 @@ $(document).ready(function(){
 
 		if(e.responseText === "emailExists")
 			//alert("El email ya está en uso");
-			Materialize.toast("El email ya está en uso", 5000);
+			Materialize.toast("El email ya existe", 5000);
 
 		if(e.responseText === "invalidKey")
 			//alert("Clave inválida");
-			Materialize.toast("Clave inválida", 5000);
+			Materialize.toast("Clave no autenticada", 5000);
 		}
 	});
 
