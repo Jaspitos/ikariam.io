@@ -4,6 +4,8 @@
      */
 
     var socket = io('/chatNsp');
+    var sound = $('.playSound');
+
     $('form').submit(function() {
         var chosen_color = $('.sp-preview-inner').css("background-color");
         socket.emit('chat message', {message:$('#m').val(), color:chosen_color});
@@ -13,7 +15,10 @@
 
     socket.on('chat message', function(msg) {
         $('#messages').append($('<li>').text(msg.user+" : "+msg.text.message).css('color',msg.text.color));//Writes socket message
+        sound.trigger('load');
+        sound.trigger('play');
         $('#chatparent').scrollTop(1000000);//Focus the scroll to bottom side
+        setTimeout(function() {sound.trigger('pause'); sound.prop("currentTime", 0);}, 1120);
     });
 
     socket.on('newConnection', function(usr, clientes) {
