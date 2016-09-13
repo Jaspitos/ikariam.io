@@ -10,7 +10,7 @@
 			var Server 		= require('mongodb').Server;
 			var dbprop 		= require('../properties/db-properties');
 
-		
+
 
 			dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
 
@@ -164,7 +164,8 @@
 
 				newUser.save(function(err,o) {
 			  	if (err)
-			  		callback(null, err);
+						callback(null, err);
+
 							if(o)	{
 							// save the user
 							newUser.save();
