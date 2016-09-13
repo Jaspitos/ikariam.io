@@ -3,7 +3,7 @@
      *@Desc: Creates sockets communication with server-side
      */
 
-    var socket = io();
+    var socket = io('/chatNsp');
     $('form').submit(function() {
         var chosen_color = $('.sp-preview-inner').css("background-color");
         socket.emit('chat message', {message:$('#m').val(), color:chosen_color});

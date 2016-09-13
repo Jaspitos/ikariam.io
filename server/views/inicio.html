@@ -45,8 +45,11 @@
                 <div style="background-color: green; height: 20%">
                   asdd
                 </div>
-                <div style="background-color: yellow; height: 20%">
-                  asdd
+                <div class="z-depth-2" style="height: 30%">
+                  <div id="connectedusers">
+                  <span>Usuarios Conectados</span>
+                    <ul id="userlist"></ul>
+                  </div>
                 </div>
                 <div style="background-color: blue; height: 20%">
                   asdd
@@ -60,9 +63,11 @@
 
     </div>
 
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/js/libs/materialize.js"></script>
     <script src="/js/views/logout.js"></script>
+    <script src="/js/views/inicio.js"></script>
     <script>
         $('.dropdown-button').dropdown({
             inDuration: 300,

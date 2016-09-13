@@ -13,10 +13,13 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
+var chat = io.of('/chatNsp');
+var zaros = io.of('/inicioNsp');
 var chalk = require('chalk');
 
 //Clients list connection
-var allClients = [];
+var allClientsChat = [];
+var allClientsInicio = [];
 
 //Defining eviroment variables
 if(app.get('env') == 'development')
@@ -64,7 +67,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(sessionMiddleware);
 
 	//Une sessions con socket.io
-	io.use(function(socket, next) {
+	chat.use(function(socket, next) {
+	    sessionMiddleware(socket.request, socket.request.res, next);
+	});
+
+	//Une sessions con socket.io
+	zaros.use(function(socket, next) {
 	    sessionMiddleware(socket.request, socket.request.res, next);
 	});
 
@@ -74,37 +82,66 @@ app.use(bodyParser.urlencoded({ extended: true }));
  require('./server/routes/routes')(app);
 
  //Starts general Chat
- io.on('connection', function(socket){
+ chat.on('connection', function(socket){
 	 //Defining message object to be send to client chat
 
 	 var user = socket.request.session.user;
 	 var yaExiste = false;
 
-	 if(allClients.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
+	 if(allClientsChat.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
 	 {
-		 allClients.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
-		 io.emit('newConnection', user, allClients);
+		 allClientsChat.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
+		 chat.emit('newConnection', user, allClientsChat);
 	 }
 	 else
 	 {
 		 yaExiste = true;
-		 socket.disconnect();
 	 }
-
 
     socket.on('chat message', function(msg){
 				var text = msg;
-    		io.emit('chat message', {user, text});
+    		chat.emit('chat message', {user, text});
   	});
 
 		socket.on('disconnect', function() {
 			if(!yaExiste)
-				allClients.splice(allClients.indexOf(user), 1);
+				allClientsChat.splice(allClientsChat.indexOf(user), 1);
 
-				io.emit('disconnect', user, allClients);
+				chat.emit('disconnect', user, allClientsChat);
 		});
 
 });
+
+//---------------------------------------------------------------------------------------------------------------------------------//
+
+//Usuarios conectados en /inicio
+zaros.on('connection', function(socket){
+	//Defining message object to be send to client chat
+
+	var user = socket.request.session.user;
+	var yaExiste = false;
+
+	if(allClientsInicio.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
+	{
+		allClientsInicio.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
+		zaros.emit('newConnection', user, allClientsInicio);
+	}
+	else
+	{
+		yaExiste = true;
+		socket.disconnect();
+	}
+
+	 socket.on('disconnect', function() {
+		 if(!yaExiste)
+			 allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
+
+			 zaros.emit('disconnect', user, allClientsInicio);
+	 });
+
+});
+
+//----------------------------------------------------------------------------------------------------------------//
 
  //Starts server
  http.listen(app.get('port'), function(){
