@@ -7,19 +7,10 @@
 var MongoDB = require('mongodb').Db;
 var Server = require('mongodb').Server;
 var dbprop = require('../properties/db-properties');
+var cloudinary = require('cloudinary');
+
 
 dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-
-
-
-/*Check enviromemnt*/
-if (process.env.NODE_ENV == 'development') {
-    mongoose.connect('mongodb://localhost/ikariam');
-} else {
-    mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
-}
-
-
 
 /* establish the database connection */
 var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
@@ -44,6 +35,13 @@ db.open(function(e, d) {
             console.log('mongo :: connected to database :: "' + dbprop.dbName + '"');
         }
     }
+});
+
+//Se conecta al cdn cloudinary
+cloudinary.config({
+    cloud_name: 'dvy0ekqee',
+    api_key: '543871316948421',
+    api_secret: '8BsClfdwloSRbG_Y92Qg4mvsvSg'
 });
 
 
