@@ -3,18 +3,11 @@
  * @Desc: Profile data access object
  */
 
- /*Instance of needed modules*/
- var MongoDB = require('mongodb').Db;
- var user = require('../models/user');
- var Server = require('mongodb').Server;
- var dbprop = require('../properties/db-properties');
-
-
-
- dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-
-
-
+/*Instance of needed modules*/
+var MongoDB = require('mongodb').Db;
+var Server = require('mongodb').Server;
+var dbprop = require('../properties/db-properties');
+var cloudinary = require('cloudinary');
 
  /* establish the database connection */
  var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
@@ -41,9 +34,19 @@
      }
  });
 
+dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
+
+
 
  //Colection we want to play with
  var accounts = db.collection('users');
+
+//Se conecta al cdn cloudinary
+cloudinary.config({
+    cloud_name: 'dvy0ekqee',
+    api_key: '543871316948421',
+    api_secret: '8BsClfdwloSRbG_Y92Qg4mvsvSg'
+});
 
 /*Retreives user personal information */
 exports.getProfile = function(username, callback) {
