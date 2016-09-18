@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html >
-  <head>
+<html>
+
+<head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/materialize.css">
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
-	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
-	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
-	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
 
     <link rel="stylesheet" href="css/signup.css">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div class="divContenedorFoto">
         <img class="responsive-img" src="pics/bg-logo4.png">
@@ -25,57 +28,58 @@
 
     <div class="signup__container z-depth-1" ng-app="validationApp" ng-controller="mainController">
 
-  <div class="container__child signup__form">
-    <form id="signup" action="/signup" method="post" name="userForm" ng-submit="submitForm()" novalidate>
+        <div class="container__child signup__form">
+            <form id="signup" action="/signup" method="post" name="userForm" ng-submit="submitForm()" novalidate>
 
-      <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
-        <label for="username">Nombre de usuario</label>
-        <input class="form-control" type="text" name="username" id="username" maxlength="10" ng-model="user.username" ng-pattern='/^[a-zA-Z0-9]{3,10}$/' required />
-		<p ng-show="userForm.username.$error.pattern" class="help-block">Formato incorrecto</p>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+                    <label for="username">Nombre de usuario</label>
+                    <input class="form-control" type="text" name="username" id="username" maxlength="10" ng-model="user.username" ng-pattern='/^[a-zA-Z0-9]{3,10}$/' required />
+                    <p ng-show="userForm.username.$error.pattern" class="help-block">Formato incorrecto</p>
 
-      </div>
+                </div>
 
-      <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-        <label for="email">Email</label>
-        <input class="form-control" type="email" validate-email name="email" id="email" ng-model="user.email" required />
-		<p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Introduce un email válido</p>
-      </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" validate-email name="email" id="email" ng-model="user.email" required />
+                    <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Introduce un email válido</p>
+                </div>
 
-      <div class="form-group" ng-class="{ 'has-error' : userForm.pass.$invalid && !userForm.pass.$pristine }">
-        <label for="password">Contraseña</label>
-        <input class="form-control" type="password" name="pass" id="pass" maxlength="12" placeholder="********" ng-model="user.pass" ng-minlength="4" required />
-		<p ng-show="userForm.pass.$error.minlength" class="help-block">4 caracteres como mínimo</p>
-      </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.pass.$invalid && !userForm.pass.$pristine }">
+                    <label for="password">Contraseña</label>
+                    <input class="form-control" type="password" name="pass" id="pass" maxlength="12" placeholder="********" ng-model="user.pass" ng-minlength="4" required />
+                    <p ng-show="userForm.pass.$error.minlength" class="help-block">4 caracteres como mínimo</p>
+                </div>
 
-      <div class="form-group" ng-class="{ 'has-error' : userForm.repass.$invalid && !userForm.repass.$pristine }">
-        <label for="passwordRepeat">Repite la contraseña</label>
-        <input class="form-control" type="password" name="repass" id="repass" maxlength="12" placeholder="********" ng-model="user.repass" password-confirm="user.pass" required />
-		<p ng-show="userForm.repass.$invalid && !userForm.repass.$pristine" class="help-block">Las contraseñas no coinciden</p>
-      </div>
+                <div class="form-group" ng-class="{ 'has-error' : userForm.repass.$invalid && !userForm.repass.$pristine }">
+                    <label for="passwordRepeat">Repite la contraseña</label>
+                    <input class="form-control" type="password" name="repass" id="repass" maxlength="12" placeholder="********" ng-model="user.repass" password-confirm="user.pass" required />
+                    <p ng-show="userForm.repass.$invalid && !userForm.repass.$pristine" class="help-block">Las contraseñas no coinciden</p>
+                </div>
 
-    <input type="hidden" name="keyp" id="keyp"/>
+                <input type="hidden" name="keyp" id="keyp" />
 
-      <div class="m-t-lg">
-        <ul class="list-inline" style="text-align:center;">
-          <li>
-            <input class="btn btn--form" type="submit" value="Crear cuenta" ng-disabled="userForm.$invalid" />
-          </li>
-        </ul>
-      </div>
+                <div class="m-t-lg">
+                    <ul class="list-inline" style="text-align:center;">
+                        <li>
+                            <input class="btn btn--form" type="submit" value="Crear cuenta" ng-disabled="userForm.$invalid" />
+                        </li>
+                    </ul>
+                </div>
 
-    </form>
-  </div>
-</div>
+            </form>
+        </div>
+    </div>
 
-</div>
-</div>
-		<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
+    </div>
+    </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="/js/libs/materialize.js"></script>
-		<script src="/js/libs/jquery.form.js"></script>
-		<script src="/js/views/signup.js"></script>
+    <script src="/js/libs/jquery.form.js"></script>
+    <script src="/js/views/signup.js"></script>
 
 
 
-  </body>
+</body>
+
 </html>

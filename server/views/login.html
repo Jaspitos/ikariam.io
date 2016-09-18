@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html >
-  <head>
+<html>
+
+<head>
     <meta charset="UTF-8">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
-  	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
-  	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
-  	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
 
     <link rel="stylesheet" type="text/css" href="css/login.css">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
     <div class="divContenedorFoto">
         <img class="responsive-img" src="pics/bg-logo4.png">
@@ -26,34 +29,35 @@
 
     <div class="signup__container z-depth-1">
 
-  <div class="container__child signup__form">
-    <form id="login" action="/" method="post">
-      <div class="form-group">
-        <label for="username">Nombre de usuario</label>
-        <input class="form-control" type="text" name="userLogin" id="username" maxlength="10" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input class="form-control" type="password" name="passLogin" id="password" maxlength="12" placeholder="********" required />
-      </div>
-      <div class="form-group">
-      <div class="m-t-lg">
-        <ul class="list-inline" style="text-align:center;">
-          <li>
-            <input class="btn btn--form" type="submit" value="Entrar" />
-          </li>
-        </ul>
-      </div>
-    </form>
-  </div>
-</div>
+        <div class="container__child signup__form">
+            <form id="login" action="/" method="post">
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+                    <input class="form-control" type="text" name="userLogin" id="username" maxlength="10" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input class="form-control" type="password" name="passLogin" id="password" maxlength="12" placeholder="********" required />
+                </div>
+                <div class="form-group">
+                    <div class="m-t-lg">
+                        <ul class="list-inline" style="text-align:center;">
+                            <li>
+                                <input class="btn btn--form" type="submit" value="Entrar" />
+                            </li>
+                        </ul>
+                    </div>
+            </form>
+            </div>
+        </div>
 
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="/js/libs/materialize.js"></script>
-		<script src="/js/libs/jquery.form.js"></script>
-		<script src="/js/views/login.js"></script>
+        <script src="/js/libs/materialize.js"></script>
+        <script src="/js/libs/jquery.form.js"></script>
+        <script src="/js/views/login.js"></script>
 
 
 
-  </body>
+</body>
+
 </html>

@@ -22,12 +22,14 @@ var allClientsChat = [];
 var allClientsInicio = [];
 
 //Defining eviroment variables
-if(app.get('env') == 'development')
-	process.env.NODE_ENV = 'development';
-		else
-			process.env.NODE_ENV = 'production';
+if (app.get('env') == 'development')
+    process.env.NODE_ENV = 'development';
+else
+    process.env.NODE_ENV = 'production';
 
-console.log('Entorno elegido  ' + "----> "+chalk.bold.red(process.env.NODE_ENV));
+
+
+console.log('Entorno elegido  ' + "----> " + chalk.bold.red(process.env.NODE_ENV));
 
 //App settings
 app.set('port', process.env.PORT || 3000);
@@ -41,109 +43,114 @@ app.engine('html', require('ejs').renderFile);
 //Defining App use
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
- 	dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
- 	var dbHost = dbprop['app'].dbHost;
- 	var dbPort = dbprop.dbPort;
- 	var dbName = dbprop.dbName;
+dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
+var dbHost = dbprop['app'].dbHost;
+var dbPort = dbprop.dbPort;
+var dbName = dbprop.dbName;
 
- 	//TODO
- 	var dbURL = 'mongodb://'+dbHost+':'+dbPort+'/'+dbName;
- 	if (app.get('env') == 'production'){
- 	dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
- 	}
+//TODO
+var dbURL = 'mongodb://' + dbHost + ':' + dbPort + '/' + dbName;
+if (app.get('env') == 'production') {
+    dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
+}
 
-	//Defining session variable
-	var sessionMiddleware = session({
-	secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
-	resave: false,
-	saveUninitialized: false,
-	cookie: {maxAge:86400000},
-	store: new MongoStore({ url: dbURL })
-	});
+//Defining session variable
+var sessionMiddleware = session({
+    secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 86400000
+    },
+    store: new MongoStore({
+        url: dbURL
+    })
+});
 
-	app.use(sessionMiddleware);
+app.use(sessionMiddleware);
 
-	//Une sessions con socket.io
-	chat.use(function(socket, next) {
-	    sessionMiddleware(socket.request, socket.request.res, next);
-	});
+//Une sessions con socket.io
+chat.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
 
-	//Une sessions con socket.io
-	zaros.use(function(socket, next) {
-	    sessionMiddleware(socket.request, socket.request.res, next);
-	});
+//Une sessions con socket.io
+zaros.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
 
 
 
- //Module of routes conf
- require('./server/routes/routes')(app);
+//Module of routes conf
+require('./server/routes/routes')(app);
 
- //Starts general Chat
- chat.on('connection', function(socket){
-	 //Defining message object to be send to client chat
+//Starts general Chat
+chat.on('connection', function(socket) {
+    //Defining message object to be send to client chat
 
-	 var user = socket.request.session.user;
-	 var yaExiste = false;
+    var user = socket.request.session.user;
+    var yaExiste = false;
 
-	 if(allClientsChat.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
-	 {
-		 allClientsChat.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
-		 chat.emit('newConnection', user, allClientsChat);
-	 }
-	 else
-	 {
-		 yaExiste = true;
-	 }
+    if (allClientsChat.indexOf(user) == -1) //Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
+    {
+        allClientsChat.unshift(user); //Se inserta el usuario en el array por el principio			unshift --> array <-- push
+        chat.emit('newConnection', user, allClientsChat);
+    } else {
+        yaExiste = true;
+    }
 
-    socket.on('chat message', function(msg){
-				var text = msg;
-    		chat.emit('chat message', {user, text});
-  	});
+    socket.on('chat message', function(msg) {
+        var text = msg;
+        chat.emit('chat message', {
+            user,
+            text
+        });
+    });
 
-		socket.on('disconnect', function() {
-			if(!yaExiste)
-				allClientsChat.splice(allClientsChat.indexOf(user), 1);
+    socket.on('disconnect', function() {
+        if (!yaExiste)
+            allClientsChat.splice(allClientsChat.indexOf(user), 1);
 
-				chat.emit('disconnect', user, allClientsChat);
-		});
+        chat.emit('disconnect', user, allClientsChat);
+    });
 
 });
 
 //---------------------------------------------------------------------------------------------------------------------------------//
 
 //Usuarios conectados en /inicio
-zaros.on('connection', function(socket){
-	//Defining message object to be send to client chat
+zaros.on('connection', function(socket) {
+    //Defining message object to be send to client chat
 
-	var user = socket.request.session.user;
-	var yaExiste = false;
+    var user = socket.request.session.user;
+    var yaExiste = false;
 
-	if(allClientsInicio.indexOf(user) == -1)	//Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
-	{
-		allClientsInicio.unshift(user);	//Se inserta el usuario en el array por el principio			unshift --> array <-- push
-		zaros.emit('newConnection', user, allClientsInicio);
-	}
-	else
-	{
-		yaExiste = true;
-		socket.disconnect();
-	}
+    if (allClientsInicio.indexOf(user) == -1) //Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
+    {
+        allClientsInicio.unshift(user); //Se inserta el usuario en el array por el principio			unshift --> array <-- push
+        zaros.emit('newConnection', user, allClientsInicio);
+    } else {
+        yaExiste = true;
+        socket.disconnect();
+    }
 
-	 socket.on('disconnect', function() {
-		 if(!yaExiste)
-			 allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
+    socket.on('disconnect', function() {
+        if (!yaExiste)
+            allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
 
-			 zaros.emit('disconnect', user, allClientsInicio);
-	 });
+        zaros.emit('disconnect', user, allClientsInicio);
+    });
 
 });
 
 //----------------------------------------------------------------------------------------------------------------//
 
- //Starts server
- http.listen(app.get('port'), function(){
- console.log(chalk.bgBlue('Express server listening on port ' + app.get('port')));
- });
+//Starts server
+http.listen(app.get('port'), function() {
+    console.log(chalk.bgBlue('Express server listening on port ' + app.get('port')));
+});
