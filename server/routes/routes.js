@@ -9,118 +9,134 @@ var profiledao = require('../dao/profiledao');
 
 module.exports = function(app) {
 
-    /*Http get request to signup page*/
-    app.get('/', function(req, res) {
+        /*Http get request to signup page*/
+        app.get('/', function(req, res) {
 
-        // attempt automatic login //
-        logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
-            if (o) {
-                res.render('inicio', {
-                    title: "Inicio",
-                    usrName: req.session.user
+                // attempt automatic login //
+                logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
+                        if (o) {
+                          profiledao.getProfile(req.session.user, function(o, e) {
+                              if (e) res.render('/');
+                              else if (o) {
+                                  res.render('inicio', {
+                                      title: "Inicio",
+                                      profile: o
+                                  });
+                              }
+                          });
+                        } else {
+                          res.render('login', {
+                              title: 'Entrar'
+                          });
+                        }
                 });
-            } else {
-                res.render('login', {
-                    title: 'Entrar'
                 });
-            }
-        });
 
-    });
-
-    /* Http post request to submit login */
-    app.post('/', function(req, res) {
-        logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o) {
-            if (!o) {
-                res.status(400).send(e);
-            } else {
-                if (req.session.user == o.username && req.session.passwd == o.password)
-                    res.status(200).send(o);
-                else {
-                    req.session.user = o.username;
-                    req.session.passwd = o.password;
-                    res.status(200).send(o);
-                }
+            /* Http post request to submit login */
+            app.post('/', function(req, res) {
+                logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o) {
+                    if (!o) {
+                        res.status(400).send(e);
+                    } else {
+                        if (req.session.user == o.username && req.session.passwd == o.password)
+                            res.status(200).send(o);
+                        else {
+                            req.session.user = o.username;
+                            req.session.passwd = o.password;
+                            res.status(200).send(o);
+                        }
 
 
-            }
-        });
-    });
+                    }
+                });
+            });
 
-    app.get('/signup', function(req, res) {
-        res.render('signup', {
-            title: 'Registro'
-        });
-    });
+            app.get('/signup', function(req, res) {
+                res.render('signup', {
+                    title: 'Registro'
+                });
+            });
 
-    app.post('/signup', function(req, res) {
+            app.post('/signup', function(req, res) {
 
-        logindao.checkKey(req.body['keyp'], function(er, ob) {
-            if (ob == true) {
-                logindao.checkUser(req.body['username'], function(err, obb) {
-                    if (obb == false) {
-                        logindao.checkEmail(req.body['email'], function(error, obj) {
-                            if (obj == false) {
-                                // create a new user
-                                logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
-                                    if (!o)
-                                        res.status(400).send(e);
+                logindao.checkKey(req.body['keyp'], function(er, ob) {
+                    if (ob == true) {
+                        logindao.checkUser(req.body['username'], function(err, obb) {
+                            if (obb == false) {
+                                logindao.checkEmail(req.body['email'], function(error, obj) {
+                                    if (obj == false) {
+                                        // create a new user
+                                        logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
+                                            if (!o)
+                                                res.status(400).send(e);
 
-                                    else
-                                        res.status(200).send(o);
+                                            else
+                                                res.status(200).send(o);
 
-                                });
+                                        });
 
-                            } else res.status(400).send(error);
+                                    } else res.status(400).send(error);
+                                })
+
+                            } else res.status(400).send(err);
                         })
-
-                    } else res.status(400).send(err);
+                    } else res.status(400).send(er);
                 })
-            } else res.status(400).send(er);
-        })
 
-    });
+            });
 
 
 
 
-    app.get('/inicio', function(req, res) {
-        // create a new user
-        res.render('inicio', {
-            title: 'Inicio',
-            usrName: req.session.user
-        });
+            app.get('/inicio', function(req, res) {
+                // create a new user
+                profiledao.getProfile(req.session.user, function(o, e) {
+                    if (e) res.render('/');
+                    else if (o) {
+                        res.render('inicio', {
+                            title: "Inicio",
+                            profile: o
+                        });
+                    }
 
-    });
+                })
 
-    app.get('/chat', function(req, res) {
-        // create a new user
-        res.render('chat', {
-            title: 'Chat',
-            usrName: req.session.user
-        });
+            });
 
-    });
+            app.get('/chat', function(req, res) {
+                // create a new user
+                profiledao.getProfile(req.session.user, function(o, e) {
+                    if (e) res.render('/');
+                    else if (o) {
+                        res.render('chat', {
+                            title: "Chat",
+                            profile: o
+                        });
+                    }
 
-    app.get('/profile', function(req, res) {
-        // create a new user
-        profiledao.getProfile(req.session.user, function(o, e) {
-          if(e) res.render('/');
-            else if (o) {
-                res.render('profile', {
-                    profile: o
+                })
+            });
+
+            app.get('/profile', function(req, res) {
+                // create a new user
+                profiledao.getProfile(req.session.user, function(o, e) {
+                    if (e) res.render('/');
+                    else if (o) {
+                        res.render('profile', {
+                            title: "Perfil",
+                            profile: o
+                        });
+                    }
+
+                })
+
+            });
+
+            app.post('/logout', function(req, res) {
+                req.session.destroy(function(e) {
+                    res.status(200).send('deleted');
                 });
-            }
-
-        })
-
-    });
-
-    app.post('/logout', function(req, res) {
-        req.session.destroy(function(e) {
-            res.status(200).send('deleted');
-        });
-    })
+            })
 
 
-};
+        };

@@ -9,6 +9,7 @@ var Server = require('mongodb').Server;
 var dbprop = require('../properties/db-properties');
 var cloudinary = require('cloudinary');
 
+dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
  /* establish the database connection */
  var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
      auto_reconnect: true
@@ -34,7 +35,7 @@ var cloudinary = require('cloudinary');
      }
  });
 
-dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
+
 
 
 

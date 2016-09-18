@@ -1,6 +1,9 @@
 <html>
 
 <head>
+  <title>
+      <%= title %>
+  </title>
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,15 +16,14 @@
 <body>
     <nav>
         <div class="nav-wrapper deep-purple darken-1">
-            <img class="brand-logo responsive-img" src="pics/bg-logo4.png" href="/" style="padding: 4;">
+            <img class="brand-logo responsive-img" src="img/bg-logo4.png" href="/" style="padding: 4;">
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/tools">Foro</a>
                 </li>
                 <li><a href="/play">Herramientas</a>
                 </li>
-                <li><img class="ui medium image" src="" style="height:30px;width:30px;>"></li>
-                <li>
+                <li><img src="<%= profile.profilePic %>" style="height:30px;width:30px;margin-bottom:-30%;>" ></li>
                     <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
                     </li>
                     <!-- Dropdown Structure <-->
@@ -40,15 +42,11 @@
     <div class="container z-depth-1" style="height:80%; margin-top:5%; margin-bottom:5%; ">
         <div class="row">
             <div class="col l4 m6 s4" style="height:100%;">
-                <div class="imagenContainer">
-                    <div class="imagen">
-                        aqui va la imagen
-                    </div>
+                <div class="imagenContainer z-depth-1">
+                    <img class="responsive-img" src="<%= profile.profilePic %>" style="max-height: 100%; max-width: 100%;" />
                 </div>
-                <div class="datosIkariamContainer">
-                    <div class="datosIkarriam">
-                        aqui van los datos
-                    </div>
+                <div class="datosIkariamContainer z-depth-1">
+
                 </div>
             </div>
 
