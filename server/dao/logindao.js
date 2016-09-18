@@ -184,24 +184,6 @@
 			};
 
 
-			/*Retreives user personal information */
-			exports.getProfileInfo = function(username, callback) {
-			    accounts.findOne({
-			        username: username
-			    }, function(e, o) {
-			        if (o) {
-			            //console.log(o);
-			            callback(o);
-			        } else
-			            callback(null);
-			    })
-
-
-			}
-
-
-
-
 			/*
 			 *internal functions
 			 */

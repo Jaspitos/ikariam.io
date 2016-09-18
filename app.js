@@ -1,5 +1,5 @@
 /**
- *@Author: Javier css trainer y Lorenzo el becario
+ *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
  */
 
@@ -8,7 +8,6 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var dbprop = require('./server/properties/db-properties');
@@ -28,8 +27,8 @@ else
     process.env.NODE_ENV = 'production';
 
 
-
 console.log('Entorno elegido  ' + "----> " + chalk.bold.red(process.env.NODE_ENV));
+
 
 //App settings
 app.set('port', process.env.PORT || 3000);

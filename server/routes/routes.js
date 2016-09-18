@@ -5,6 +5,7 @@
 
 //Scope variables
 var logindao = require('../dao/logindao');
+var profiledao = require('../dao/profiledao');
 
 module.exports = function(app) {
 
@@ -103,10 +104,15 @@ module.exports = function(app) {
 
     app.get('/profile', function(req, res) {
         // create a new user
-        res.render('profile', {
-            title: 'Perfil',
-            usrName: req.session.user
-        });
+        profiledao.getProfile(req.session.user, function(o, e) {
+          if(e) res.render('/');
+            else if (o) {
+                res.render('profile', {
+                    profile: o
+                });
+            }
+
+        })
 
     });
 

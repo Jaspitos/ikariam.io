@@ -1,0 +1,17 @@
+.imagenContainer {
+  height: 40%;
+  background-color: pink;
+}
+
+.imagen {
+  position: absolute;
+  padding: 2%;
+}
+
+.datosIkariamContainer {
+  height: 60%;
+}
+
+.datosIkariam {
+
+}
