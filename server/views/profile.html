@@ -1,9 +1,9 @@
 <html>
 
 <head>
-  <title>
-      <%= title %>
-  </title>
+    <title>
+        <%= title %>
+    </title>
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,18 +23,18 @@
                 </li>
                 <li><a href="/play">Herramientas</a>
                 </li>
-                <li><img src="<%= profile.profilePic %>" style="height:30px;width:30px;margin-bottom:-30%;>" ></li>
-                    <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
+                <li><img src="<%= profile.profilePic %>" style="height:30px;width:30px;margin-bottom:-30%;>"></li>
+                <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
+                </li>
+                <!-- Dropdown Structure <-->
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li class="divider"></li>
+                    <li><a href="#!">Ajustes (en construcción)</a>
                     </li>
-                    <!-- Dropdown Structure <-->
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li class="divider"></li>
-                        <li><a href="#!">Ajustes (en construcción)</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a id="logout" href="#!">Cerrar sesión</a>
-                        </li>
-                    </ul>
+                    <li class="divider"></li>
+                    <li><a id="logout" href="#!">Cerrar sesión</a>
+                    </li>
+                </ul>
             </ul>
 
         </div>
@@ -43,7 +43,12 @@
         <div class="row">
             <div class="col l4 m6 s4" style="height:100%;">
                 <div class="imagenContainer z-depth-1">
-                    <img class="responsive-img" src="<%= profile.profilePic %>" style="max-height: 100%; max-width: 100%;" />
+                    <label for="file-input"><a class=" tooltipped" data-position="top" data-delay="50" data-tooltip="Cambiar foto">
+                       <img class="responsive-img" src="<%= profile.profilePic %>" style="max-height: 100%; max-width: 100%;" /></a>
+                    </label>
+                    <form enctype="multipart/form-data id="uprofile" name="uprofile" method="POST" action="/profile">
+                        <input id="file-input" name="profilepic" type="file" accept="image/*" style="display: none;" />
+                    </form>
                 </div>
                 <div class="datosIkariamContainer z-depth-1">
 
@@ -51,10 +56,15 @@
             </div>
 
             <div class="col l8 m6 s8" style="background-color:orange; height:100%;">
-                Lorem Ipsum es simplemente el texto de rell
+
             </div>
         </div>
     </div>
+
+    <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
+    <script src="/js/libs/materialize.js"></script>
+    <script src="/js/views/profile.js"></script>
+    <script src="/js/views/logout.js"></script>
 
 </body>
 
