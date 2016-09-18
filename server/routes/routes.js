@@ -136,9 +136,7 @@ module.exports = function(app) {
 
             app.post('/profile', fileUpload.single('profilepic'), function (req, res) {
 
-                  
-              var buffer = new Buffer(req.file.buffer.toString(), 'base64')
-              profiledao.changeImg(buffer, function (o, e) {
+              profiledao.changeImg(req.file.buffer, function (o, e) {
                   if(e)
                   {
                     console.log("error");
