@@ -1,3 +1,7 @@
 .contenedorFoto{
   margin: auto;
 }
+
+#connectedusers {
+  padding: 5px 24px 20px 20px;
+}

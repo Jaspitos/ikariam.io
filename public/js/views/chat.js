@@ -16,24 +16,24 @@
     });
 
     socket.on('chat message', function(msg) {
-        $('#messages').append($('<li>').text(msg.user + " : " + msg.text.message).css('color', msg.text.color)); //Writes socket message
+        $('#messages').append($('<li>').text(msg.user + ": " + msg.text.message).css('color', msg.text.color)); //Writes socket message
         $('#chatparent').scrollTop(1000000); //Focus the scroll to bottom side
     });
 
     socket.on('newConnection', function(usr, clientes) {
-        $('#messages').append($('<li>').text(usr + " se ha conectado.").css('font-style', 'italic'));
+        $('#messages').append($('<li>').text(usr + " se ha conectado").css('font-style', 'italic'));
         $('#userlist').empty();
         $.each(clientes, function(index, value) {
-            $('#userlist').append($('<li>').text(value));
+            $('#userlist').append($('<li>').text("► "+value));
         })
     });
 
     socket.on('disconnect', function(msg, clientes) {
         if (msg != 'io server disconnect') {
-            $('#messages').append($('<li>').text(msg + " se ha desconectado.").css('font-style', 'italic'));
+            $('#messages').append($('<li>').text(msg + " se ha desconectado").css('font-style', 'italic'));
             $('#userlist').empty();
             $.each(clientes, function(index, value) {
-                $('#userlist').append($('<li>').text(value));
+                $('#userlist').append($('<li>').text("► "+value));
             })
         } else
             $('#messages').append($('<li>').text("Conexión rechazada: ya estás dentro del chat").css('font-style', 'italic'));
