@@ -27,7 +27,7 @@ else
     process.env.NODE_ENV = 'production';
 
 
-console.log('Entorno elegido  ' + "----> " + chalk.bold.red(process.env.NODE_ENV));
+console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(process.env.NODE_ENV));
 
 
 //App settings
@@ -151,5 +151,5 @@ zaros.on('connection', function(socket) {
 
 //Starts server
 http.listen(app.get('port'), function() {
-    console.log(chalk.bgBlue('Express server listening on port ' + app.get('port')));
+    console.log(chalk.bold.green('Express server listening on port ' + app.get('port')));
 });

@@ -9,6 +9,7 @@
 			var user = require('../models/user');
 			var Server = require('mongodb').Server;
 			var dbprop = require('../properties/db-properties');
+			var chalk = require('chalk');
 
 
 
@@ -39,13 +40,13 @@
 			        if (process.env.NODE_ENV == 'production') {
 			            db.authenticate('devel', 'vivaeta', function(e, res) {
 			                if (e) {
-			                    console.log('mongo :: error: not authenticated', e);
+			                    console.log(chalk.bold.bgRed('mongo :: error: not authenticated'), e);
 			                } else {
-			                    console.log('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"');
+			                    console.log(chalk.bold.bgGreen('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"'));
 			                }
 			            });
 			        } else {
-			            console.log('mongo :: connected to database :: "' + dbprop.dbName + '"');
+			            console.log(chalk.bold.bgGreen('mongo :: connected to database :: "' + dbprop.dbName + '"'));
 			        }
 			    }
 			});
@@ -161,7 +162,7 @@
 			        email: email,
 			        username: username,
 			        password: pass,
-							profilePic: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
+			        profilePic: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
 			        admin: false
 
 			    });

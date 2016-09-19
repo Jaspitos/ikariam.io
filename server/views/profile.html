@@ -14,31 +14,33 @@
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper deep-purple darken-1">
-            <img class="brand-logo responsive-img" src="img/bg-logo4.png" href="/" style="padding: 4;">
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="/tools">Foro</a>
-                </li>
-                <li><a href="/play">Herramientas</a>
-                </li>
-                <li><img src="<%= profile.profilePic %>" style="height:30px;width:30px;margin-bottom:-30%;>"></li>
-                <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
-                </li>
-                <!-- Dropdown Structure <-->
-                <ul id='dropdown1' class='dropdown-content'>
-                    <li class="divider"></li>
-                    <li><a href="#!">Ajustes (en construcción)</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a id="logout" href="#!">Cerrar sesión</a>
-                    </li>
-                </ul>
-            </ul>
+  <nav>
+      <div class="nav-wrapper deep-purple darken-1">
+          <a href="/"><img class="brand-logo responsive-img" src="img/bg-logo4.png" style="padding: 4;"></>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><img src="<%= profile.profilePic %>" style="height:50px;width:50px;margin-bottom:-40%;"></li>
+            <li><a href="/chat">Chat</a>
+            </li>
+              <li><a href="#!">Foro</a>
+              </li>
+              <li><a href="#!">Herramientas</a>
+              </li>
+              <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
+              </li>
+              <!-- Dropdown Structure -->
+              <ul id='dropdown1' class='dropdown-content'>
+                  <li class="divider"></li>
+                  <li><a href="#!">Panel de usuario</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a id="logout" href="#!">Cerrar sesión</a>
+                  </li>
+              </ul>
+          </ul>
 
-        </div>
-    </nav>
+      </div>
+  </nav>
     <div class="container z-depth-1" style="height:80%; margin-top:5%; margin-bottom:5%; ">
         <div class="row">
             <div class="col l4 m6 s4" style="height:100%;">
@@ -63,8 +65,19 @@
 
       <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="/js/libs/materialize.js"></script>
-    <script src="/js/views/profile.js"></script>
     <script src="/js/views/logout.js"></script>
+    <script src="/js/views/profile.js"></script>
+    <script>
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false,
+            hover: true,
+            gutter: 0,
+            belowOrigin: true,
+            alignment: 'right'
+        });
+    </script>
 
 </body>
 
