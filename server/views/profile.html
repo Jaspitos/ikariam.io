@@ -19,9 +19,8 @@
           <a href="/"><img class="brand-logo responsive-img" src="img/bg-logo4.png" style="padding: 4;"></>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-            <li><img src="<%= profile.profilePic %>" style="height:50px;width:50px;margin-bottom:-40%;"></li>
-            <li><a href="/chat">Chat</a>
-            </li>
+            <li><a href="/profile"><img src="<%= profile.profilePic %>" style="height:50px;width:50px;margin-bottom:-40%;"></a></li>
+            <li><a href="/chat">Chat</a></li>
               <li><a href="#!">Foro</a>
               </li>
               <li><a href="#!">Herramientas</a>
@@ -57,8 +56,10 @@
                 </div>
             </div>
 
-            <div class="col l8 m6 s8" style="background-color:orange; height:100%;">
-
+            <div id="bloque-personal" class="col l8 m6 s8" style="background-color:grey; height:100%;">
+              <blockquote>Email: <%= profile.email %></blockquote>
+              <blockquote>Username: <%= profile.username %></blockquote>
+              <blockquote>Password: ***** </blockquote>
             </div>
         </div>
     </div>

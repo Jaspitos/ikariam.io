@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <title>
       <%= title %>
@@ -22,13 +21,11 @@
             <a href="/"><img class="brand-logo" src="img/bg-logo4.png" style="padding: 4;"></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-              <li><img src="<%= profile.profilePic %>" style="height:50px;width:50px;margin-bottom:-40%;" ></li>
-                <li><a href="#!">Foro</a>
-                </li>
-                <li><a href="#!">Herramientas</a>
-                </li>
-                <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
-                </li>
+                <li><img src="<%= profile.profilePic %>" style="height:50px;width:50px;margin-bottom:-40%;" ></li>
+                <li><a href="/chat">Chat</a>
+                <li><a href="#!">Foro</a></li>
+                <li><a href="#!">Herramientas</a></li>
+                <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a></li>
                 <!-- Dropdown Structure -->
                 <ul id='dropdown1' class='dropdown-content'>
                     <li class="divider"></li>
