@@ -52,21 +52,24 @@ cloudinary.config({
 
 /*Retreives user personal information */
 exports.getProfile = function(username, callback) {
-        accounts.findOne({
-            username: username
-        }, function(e, o) {
-            if (o) {
-                //console.log(o);
-                callback(o);
-            } else
-                callback(null);
-        })
+    accounts.findOne({
+        username: username
+    }, function(e, o) {
+        if (o) {
+            console.log("getProfile: "+o);
+            callback(o);
+        } else
+            callback(null);
+    })
 
-        }
+}
 
-        exports.changeImg = function(img, callback) {
-          cloudinary.uploader.upload(img, function(result) {
-            console.log(result);
 
-          });
-        }
+exports.changeImg = function(user, img, callback) {
+        var buffer = new Buffer(img).toString('base64');
+        cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}); },
+          {
+            public_id: user
+          })
+          callback(true);
+    }

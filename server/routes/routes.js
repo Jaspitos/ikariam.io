@@ -136,26 +136,20 @@ module.exports = function(app) {
 
             app.post('/profile', fileUpload.single('profilepic'), function (req, res) {
 
-                  
-              var buffer = new Buffer(req.file.buffer.toString(), 'base64')
-              profiledao.changeImg(buffer, function (o, e) {
-                  if(e)
-                  {
-                    console.log("error");
-                    res.status(200).send(e);
+              profiledao.changeImg(req.session.user, req.file.buffer, function (o, e) {
+                if(o)
+                {
+                  profiledao.getProfile(req.session.user, function(o, e) {
+                      if (e) res.render('/');
+                      else if (o) {
+                          res.render('profile', {
+                              title: "Perfil",
+                              profile: o
+                          });
+                      }
 
-                  }
-                  else if (o) {
-                    console.log("correcto");
-                    res.status(400).send(o);
-
-                  }
-                  else {
-                    console.log("else");
-                      res.status(200).send(e);
-                  }
-
-
+                  })
+                }
               })
             });
 
