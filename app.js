@@ -92,22 +92,22 @@ var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPo
 });
 
 db.open(function(e, d) {
-    if (e) {
-        console.log(e);
-    } else {
-        if (process.env.NODE_ENV == 'production') {
-            db.authenticate('devel', 'vivaeta', function(e, res) {
-                if (e) {
-                    console.log('mongo :: error: not authenticated', e);
-                } else {
-                    console.log('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"');
-                }
-            });
+        if (e) {
+            console.log(e);
         } else {
-            console.log('mongo :: connected to database :: "' + dbprop.dbName + '"');
-        }
-    }
-});
+            if (process.env.NODE_ENV == 'production') {
+                db.authenticate('devel', 'vivaeta', function(e, res) {
+                    if (e) {
+                        console.log(chalk.bold.bgRed('mongo :: error: not authenticated'), e);
+                    } else {
+                        console.log(chalk.bold.bgGreen('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"'));
+                    }
+                });
+            } else {
+                console.log(chalk.bold.bgGreen('mongo :: connected to database :: "' + dbprop.dbName + '"'));
+         }
+      }
+ });
 
 
 

@@ -11,10 +11,10 @@
 			/*Check enviromemnt*/
 			if(process.env.NODE_ENV == 'development')
 			{
-				mongoose.connect('mongodb://localhost/accounts');
+				mongoose.connect('mongodb://localhost/ikariam');
 			}
 			else{
-				mongoose.connect('mongodb://lorenzito93:soygamboa93@ds027215.mlab.com:27215/accounts');
+				mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
 			}
 
 			//dao loggin checking cookies
