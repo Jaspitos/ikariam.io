@@ -56,7 +56,6 @@ exports.getProfile = function(username, callback) {
         username: username
     }, function(e, o) {
         if (o) {
-            console.log("getProfile: "+o);
             callback(o);
         } else
             callback(null);
@@ -67,9 +66,9 @@ exports.getProfile = function(username, callback) {
 
 exports.changeImg = function(user, img, callback) {
         var buffer = new Buffer(img).toString('base64');
-        cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}); },
+        cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}, {upsert: true}); console.log("updated"); callback(true);},
           {
             public_id: user
           })
-          callback(true);
+
     }

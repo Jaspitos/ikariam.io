@@ -140,14 +140,10 @@ module.exports = function(app) {
                 if(o)
                 {
                   profiledao.getProfile(req.session.user, function(o, e) {
-                      if (e) res.render('/');
-                      else if (o) {
                           res.render('profile', {
                               title: "Perfil",
                               profile: o
                           });
-                      }
-
                   })
                 }
               })
