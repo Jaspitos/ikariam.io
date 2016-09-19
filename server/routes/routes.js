@@ -7,10 +7,10 @@
 var multer = require('multer');
 var fileUpload = multer();
 var logindao = require('../dao/logindao');
-var profiledao = require('../dao/profiledao');
+var profiledao =
 
-module.exports = function(app) {
-
+module.exports = function(app,db) {
+    require('../dao/profiledao')(db);
     /*
      * @Route: principal.html
      * @Desc: Singn up a new user

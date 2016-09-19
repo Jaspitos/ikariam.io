@@ -10,37 +10,9 @@ var dbprop = require('../properties/db-properties');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
 
-dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-/* establish the database connection */
-var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
-    auto_reconnect: true
-}), {
-    w: 1
-});
-
-db.open(function(e, d) {
-    if (e) {
-        console.log(e);
-    } else {
-        if (process.env.NODE_ENV == 'production') {
-            db.authenticate('devel', 'vivaeta', function(e, res) {
-                if (e) {
-                    console.log('mongo :: error: not authenticated', e);
-                } else {
-                    console.log('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"');
-                }
-            });
-        } else {
-            console.log('mongo :: connected to database :: "' + dbprop.dbName + '"');
-        }
-    }
-});
+module.exports = function(db) {
 
 
-
-
-
-//Colection we want to play with
 var accounts = db.collection('users');
 
 //Se conecta al cdn cloudinary
@@ -72,3 +44,5 @@ exports.changeImg = function(user, img, callback) {
           })
 
     }
+
+  };

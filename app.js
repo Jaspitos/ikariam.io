@@ -10,6 +10,8 @@ var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var MongoDB = require('mongodb').Db;
+var Server = require('mongodb').Server;
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
 var chat = io.of('/chatNsp');
@@ -36,10 +38,10 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'html');
 app.set('view cache', true);
 
-//
+//App engine interpetrer
 app.engine('html', require('ejs').renderFile);
 
-//Defining App use
+//App use
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({
@@ -83,10 +85,34 @@ zaros.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
 
+var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
+    auto_reconnect: true
+}), {
+    w: 1
+});
+
+db.open(function(e, d) {
+    if (e) {
+        console.log(e);
+    } else {
+        if (process.env.NODE_ENV == 'production') {
+            db.authenticate('devel', 'vivaeta', function(e, res) {
+                if (e) {
+                    console.log('mongo :: error: not authenticated', e);
+                } else {
+                    console.log('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"');
+                }
+            });
+        } else {
+            console.log('mongo :: connected to database :: "' + dbprop.dbName + '"');
+        }
+    }
+});
+
 
 
 //Module of routes conf
-require('./server/routes/routes')(app);
+require('./server/routes/routes')(app,db);
 
 //Starts general Chat
 chat.on('connection', function(socket) {
