@@ -46,7 +46,7 @@
                     <label for="file-input"><a class=" tooltipped" data-position="top" data-delay="50" data-tooltip="Cambiar foto">
                        <img class="responsive-img" src="<%= profile.profilePic %>" style="max-height: 100%; max-width: 100%;" /></a>
                     </label>
-                    <form enctype="multipart/form-data id="uprofile" name="uprofile" method="POST" action="/profile">
+                    <form enctype="multipart/form-data" id="uprofile" name="uprofile" method="POST" action="/profile">
                         <input id="file-input" name="profilepic" type="file" accept="image/*" style="display: none;" />
                     </form>
                 </div>

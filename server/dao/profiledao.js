@@ -67,6 +67,6 @@ exports.getProfile = function(username, callback) {
         exports.changeImg = function(img, callback) {
           cloudinary.uploader.upload(img, function(result) {
             console.log(result);
-          
+
           });
         }
