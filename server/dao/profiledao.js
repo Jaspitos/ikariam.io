@@ -4,11 +4,7 @@
  */
 
 /*Instance of needed modules*/
-var MongoDB = require('mongodb').Db;
-var Server = require('mongodb').Server;
-var dbprop = require('../properties/db-properties');
 var cloudinary = require('cloudinary');
-var fs = require('fs');
 
 //Se conecta al cdn cloudinary
 cloudinary.config({

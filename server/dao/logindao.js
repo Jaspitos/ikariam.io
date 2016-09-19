@@ -1,15 +1,21 @@
 			/**
-			 * @Author: Javier
+			 * @Author: Javier y Loren
 			 * @Desc: Login data access object
 			 */
 
 			/*Instance of needed modules*/
-			var MongoDB = require('mongodb').Db;
 			var mongoose = require('mongoose');
 			var user = require('../models/user');
-			var Server = require('mongodb').Server;
-			var dbprop = require('../properties/db-properties');
 			var chalk = require('chalk');
+
+			/*Check enviromemnt*/
+			if(process.env.NODE_ENV == 'development')
+			{
+				mongoose.connect('mongodb://localhost/accounts');
+			}
+			else{
+				mongoose.connect('mongodb://lorenzito93:soygamboa93@ds027215.mlab.com:27215/accounts');
+			}
 
 			//dao loggin checking cookies
 			exports.autoLogin = function(user, pass,db, callback) {
