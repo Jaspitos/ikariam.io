@@ -19,7 +19,7 @@ module.exports = function(app,db) {
     app.get('/', function(req, res) {
 
         // attempt automatic login //
-        logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
+        logindao.autoLogin(req.session.user, req.session.passwd,db, function(o) {
             if (o) {
                 profiledao.getProfile(req.session.user,db, function(o, e) {
                     if (e) res.render('/');
@@ -44,7 +44,7 @@ module.exports = function(app,db) {
      * @Http-type: POST
      */
     app.post('/', function(req, res) {
-        logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o) {
+        logindao.manualLogin(req.body['userLogin'], req.body['passLogin'],db, function(e, o) {
             if (!o) {
                 res.status(400).send(e);
             } else {
@@ -77,14 +77,14 @@ module.exports = function(app,db) {
      */
     app.post('/signup', function(req, res) {
 
-        logindao.checkKey(req.body['keyp'], function(er, ob) {
+        logindao.checkKey(req.body['keyp'],db, function(er, ob) {
             if (ob == true) {
-                logindao.checkUser(req.body['username'], function(err, obb) {
+                logindao.checkUser(req.body['username'],db, function(err, obb) {
                     if (obb == false) {
-                        logindao.checkEmail(req.body['email'], function(error, obj) {
+                        logindao.checkEmail(req.body['email'],db, function(error, obj) {
                             if (obj == false) {
                                 // create a new user
-                                logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
+                                logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], db, function(e, o) {
                                     if (!o)
                                         res.status(400).send(e);
 
@@ -155,7 +155,7 @@ module.exports = function(app,db) {
      * @Http-type: POST
      */
     app.post('/profile', fileUpload.single('profilepic'), function(req, res) {
-        profiledao.changeImg(req.session.user, req.file.buffer, function(o, e) {
+        profiledao.changeImg(req.session.user,req.file.buffer,db, function(o, e) {
             if (o) {
                 profiledao.getProfile(req.session.user,db, function(o, e) {
                     res.render('profile', {

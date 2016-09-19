@@ -11,55 +11,9 @@
 			var dbprop = require('../properties/db-properties');
 			var chalk = require('chalk');
 
-
-
-			dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-
-
-
-			/*Check enviromemnt*/
-			if (process.env.NODE_ENV == 'development') {
-			    mongoose.connect('mongodb://localhost/ikariam');
-			} else {
-			    mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
-			}
-
-
-
-			/* establish the database connection */
-			var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
-			    auto_reconnect: true
-			}), {
-			    w: 1
-			});
-
-			db.open(function(e, d) {
-			    if (e) {
-			        console.log(e);
-			    } else {
-			        if (process.env.NODE_ENV == 'production') {
-			            db.authenticate('devel', 'vivaeta', function(e, res) {
-			                if (e) {
-			                    console.log(chalk.bold.bgRed('mongo :: error: not authenticated'), e);
-			                } else {
-			                    console.log(chalk.bold.bgGreen('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"'));
-			                }
-			            });
-			        } else {
-			            console.log(chalk.bold.bgGreen('mongo :: connected to database :: "' + dbprop.dbName + '"'));
-			        }
-			    }
-			});
-
-
-			//Colection we want to play with
-			var accounts = db.collection('users');
-			var codes = db.collection('codes');
-
-
 			//dao loggin checking cookies
-			exports.autoLogin = function(user, pass, callback) {
-
+			exports.autoLogin = function(user, pass,db, callback) {
+			var accounts = db.collection('users');
 			    accounts.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -72,7 +26,8 @@
 
 
 			//dao login when we use manual logins
-			exports.manualLogin = function(user, pass, callback) {
+			exports.manualLogin = function(user, pass, db, callback) {
+			var accounts = db.collection('users');
 
 			    accounts.findOne({
 			        username: user
@@ -96,7 +51,8 @@
 			    });
 			}
 
-			exports.checkUser = function(user, callback) {
+			exports.checkUser = function(user, db, callback) {
+			var accounts = db.collection('users');
 
 			    accounts.findOne({
 			        username: user
@@ -111,7 +67,8 @@
 			    });
 			}
 
-			exports.checkEmail = function(mail, callback) {
+			exports.checkEmail = function(mail, db, callback) {
+			var accounts = db.collection('users');
 
 			    accounts.findOne({
 			        email: mail
@@ -126,7 +83,8 @@
 			    });
 			}
 
-			exports.checkKey = function(clave, callback) {
+			exports.checkKey = function(clave, db, callback) {
+			var codes = db.collection('codes');
 
 			    codes.findOne({
 			        key: clave
@@ -155,8 +113,8 @@
 			    });
 			}
 
-			exports.signUp = function(email, username, pass, callback) {
-			    //console.log(dbName, email, username, pass);
+			exports.signUp = function(email, username, pass, db, callback) {
+			var accounts = db.collection('users');
 
 			    var newUser = user({
 			        email: email,

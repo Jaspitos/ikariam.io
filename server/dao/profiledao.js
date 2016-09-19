@@ -10,10 +10,6 @@ var dbprop = require('../properties/db-properties');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
 
-
-
-
-
 //Se conecta al cdn cloudinary
 cloudinary.config({
     cloud_name: 'dvy0ekqee',
@@ -36,7 +32,8 @@ exports.getProfile = function(username,db, callback) {
 }
 
 
-exports.changeImg = function(user, img, callback) {
+exports.changeImg = function(user, img, db, callback) {
+        var accounts = db.collection('users');
         var buffer = new Buffer(img).toString('base64');
         cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}, {upsert: true}); callback(true);},
           {
