@@ -10,10 +10,9 @@ var dbprop = require('../properties/db-properties');
 var cloudinary = require('cloudinary');
 var fs = require('fs');
 
-module.exports = function(db) {
 
 
-var accounts = db.collection('users');
+
 
 //Se conecta al cdn cloudinary
 cloudinary.config({
@@ -23,7 +22,8 @@ cloudinary.config({
 });
 
 /*Retreives user personal information */
-exports.getProfile = function(username, callback) {
+exports.getProfile = function(username,db, callback) {
+    var accounts = db.collection('users');
     accounts.findOne({
         username: username
     }, function(e, o) {
@@ -44,5 +44,3 @@ exports.changeImg = function(user, img, callback) {
           })
 
     }
-
-  };

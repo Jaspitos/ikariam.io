@@ -7,10 +7,10 @@
 var multer = require('multer');
 var fileUpload = multer();
 var logindao = require('../dao/logindao');
-var profiledao =
+var profiledao = require('../dao/profiledao');
 
 module.exports = function(app,db) {
-    require('../dao/profiledao')(db);
+
     /*
      * @Route: principal.html
      * @Desc: Singn up a new user
@@ -21,7 +21,7 @@ module.exports = function(app,db) {
         // attempt automatic login //
         logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
             if (o) {
-                profiledao.getProfile(req.session.user, function(o, e) {
+                profiledao.getProfile(req.session.user,db, function(o, e) {
                     if (e) res.render('/');
                     else if (o) {
                         res.render('inicio', {
@@ -119,7 +119,7 @@ module.exports = function(app,db) {
      */
     app.get('/chat', function(req, res) {
         // create a new user
-        profiledao.getProfile(req.session.user, function(o, e) {
+        profiledao.getProfile(req.session.user,db, function(o, e) {
             if (e) res.render('/');
             else if (o) {
                 res.render('chat', {
@@ -138,7 +138,7 @@ module.exports = function(app,db) {
      */
     app.get('/profile', function(req, res) {
         // create a new user
-        profiledao.getProfile(req.session.user, function(o, e) {
+        profiledao.getProfile(req.session.user,db, function(o, e) {
             if (e) res.render('/');
             else if (o) {
                 res.render('profile', {
@@ -157,7 +157,7 @@ module.exports = function(app,db) {
     app.post('/profile', fileUpload.single('profilepic'), function(req, res) {
         profiledao.changeImg(req.session.user, req.file.buffer, function(o, e) {
             if (o) {
-                profiledao.getProfile(req.session.user, function(o, e) {
+                profiledao.getProfile(req.session.user,db, function(o, e) {
                     res.render('profile', {
                         title: "Perfil",
                         profile: o
