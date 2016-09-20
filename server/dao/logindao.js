@@ -7,6 +7,9 @@
 			var mongoose = require('mongoose');
 			var user = require('../models/user');
 			var chalk = require('chalk');
+			var dbConfig = require('../properties/dbConfig');
+			var accounts = dbConfig.db.collection('users');
+			var codes = dbConfig.db.collection('codes');
 
 			/*Check enviromemnt*/
 			if(process.env.NODE_ENV == 'development')
@@ -18,8 +21,7 @@
 			}
 
 			//dao loggin checking cookies
-			exports.autoLogin = function(user, pass,db, callback) {
-			var accounts = db.collection('users');
+			exports.autoLogin = function(user, pass, callback) {
 			    accounts.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -32,9 +34,7 @@
 
 
 			//dao login when we use manual logins
-			exports.manualLogin = function(user, pass, db, callback) {
-			var accounts = db.collection('users');
-
+			exports.manualLogin = function(user, pass, callback) {
 			    accounts.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -57,8 +57,7 @@
 			    });
 			}
 
-			exports.checkUser = function(user, db, callback) {
-			var accounts = db.collection('users');
+			exports.checkUser = function(user, callback) {
 
 			    accounts.findOne({
 			        username: user
@@ -73,8 +72,7 @@
 			    });
 			}
 
-			exports.checkEmail = function(mail, db, callback) {
-			var accounts = db.collection('users');
+			exports.checkEmail = function(mail, callback) {
 
 			    accounts.findOne({
 			        email: mail
@@ -89,8 +87,7 @@
 			    });
 			}
 
-			exports.checkKey = function(clave, db, callback) {
-			var codes = db.collection('codes');
+			exports.checkKey = function(clave, callback) {
 
 			    codes.findOne({
 			        key: clave
@@ -119,8 +116,7 @@
 			    });
 			}
 
-			exports.signUp = function(email, username, pass, db, callback) {
-			var accounts = db.collection('users');
+			exports.signUp = function(email, username, pass, callback) {
 
 			    var newUser = user({
 			        email: email,

@@ -128,13 +128,7 @@ label {
 
 #toast-container {
   top: auto !important;
-  right: auto !important;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
+  left: auto !important;
+  bottom : 10%;
+  right: 50%;
 }
