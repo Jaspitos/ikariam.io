@@ -10,8 +10,6 @@ var http = require('http').Server(app);
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var MongoDB = require('mongodb').Db;
-var Server = require('mongodb').Server;
 var dbprop = require('./server/properties/db-properties');
 var io = require('socket.io')(http);
 var chat = io.of('/chatNsp');
@@ -85,34 +83,9 @@ zaros.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
 
-var db = new MongoDB(dbprop.dbName, new Server(dbprop['app'].dbHost, dbprop.dbPort, {
-    auto_reconnect: true
-}), {
-    w: 1
-});
-
-db.open(function(e, d) {
-        if (e) {
-            console.log(e);
-        } else {
-            if (process.env.NODE_ENV == 'production') {
-                db.authenticate('devel', 'vivaeta', function(e, res) {
-                    if (e) {
-                        console.log(chalk.bold.bgRed('mongo :: error: not authenticated'), e);
-                    } else {
-                        console.log(chalk.bold.bgGreen('mongo :: authenticated and connected to database :: "' + dbprop.dbName + '"'));
-                    }
-                });
-            } else {
-                console.log(chalk.bold.bgGreen('mongo :: connected to database :: "' + dbprop.dbName + '"'));
-         }
-      }
- });
-
-
 
 //Module of routes conf
-require('./server/routes/routes')(app,db);
+require('./server/routes/routes')(app);
 
 //Starts general Chat
 chat.on('connection', function(socket) {
