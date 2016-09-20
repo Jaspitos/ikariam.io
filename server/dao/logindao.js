@@ -133,6 +133,8 @@
 
 			    newUser.save(function(err, o) {
 			        if (err)
+							console.log(err);
+
 			            callback(null, err);
 
 			        if (o) {

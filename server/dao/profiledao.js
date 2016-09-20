@@ -14,7 +14,7 @@ cloudinary.config({
 });
 
 /*Retreives user personal information */
-exports.getProfile = function(username,db, callback) {
+exports.getProfile = function(username, db, callback) {
     var accounts = db.collection('users');
     accounts.findOne({
         username: username
@@ -29,11 +29,21 @@ exports.getProfile = function(username,db, callback) {
 
 
 exports.changeImg = function(user, img, db, callback) {
-        var accounts = db.collection('users');
-        var buffer = new Buffer(img).toString('base64');
-        cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}, {upsert: true}); callback(true);},
-          {
-            public_id: user
-          })
+    var accounts = db.collection('users');
+    var buffer = new Buffer(img).toString('base64');
+    cloudinary.uploader.upload("data:image/png;base64," + buffer, function(result) {
+        accounts.updateOne({
+            username: user
+        }, {
+            $set: {
+                profilePic: result.url
+            }
+        }, {
+            upsert: true
+        });
+        callback(true);
+    }, {
+        public_id: user
+    })
 
-    }
+}
