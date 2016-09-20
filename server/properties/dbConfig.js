@@ -35,4 +35,4 @@ db.open(function(e, d) {
 
 module.exports.db = db;
 
-//so easy becario haha
+//mongodb & node trainer
