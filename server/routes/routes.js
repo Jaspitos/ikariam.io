@@ -8,6 +8,7 @@ var multer = require('multer');
 var fileUpload = multer();
 var logindao = require('../dao/logindao');
 var profiledao = require('../dao/profiledao');
+var admindao = require('../dao/admindao');
 
 module.exports = function(app) {
 
@@ -166,6 +167,19 @@ module.exports = function(app) {
             }
         })
     });
+
+    app.get('/admin', function(req, res) {
+    //TODO: COMPROBAR SI ES ADMIN ES TRUE
+    admindao.getUserlist(req.session.user, function(o,e){
+    if(o) {
+      profiledao.getProfile(req.session.user, function(ob, err) {
+      res.render('admin',{title:"Panel de admin", userlist: o, profile: ob });
+    })
+    }
+
+    });
+    });
+
 
     /*
      * @Route: inicio.html
