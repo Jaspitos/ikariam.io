@@ -59,7 +59,7 @@
         <tbody>
           <% for(var i=0; i< userlist.length ; i++) {%>
           <tr>
-          <th><%= userlist[i] %></th><th></th>
+          <th><%= userlist[i].username %></th><th><%= userlist[i].email %></th><th><%= userlist[i].profilePic %></th><th></th><th><%= userlist[i].admin %></th>
           </tr>
           <% } %>
 
