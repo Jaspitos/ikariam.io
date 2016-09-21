@@ -173,6 +173,7 @@ module.exports = function(app) {
     admindao.getUserlist(req.session.user, function(o,e){
     if(o) {
       profiledao.getProfile(req.session.user, function(ob, err) {
+        console.log(ob);
       res.render('admin',{title:"Panel de admin", userlist: o, profile: ob });
     })
     }

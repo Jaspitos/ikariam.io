@@ -9,10 +9,12 @@
 
 exports.getUserlist = function(user,callback){
 //TODO:Comprueba si el usuario es admin, tambien lo comprueba en el routes
-  accounts.find({}, {'username': true}).toArray(function(err, results) {
+  accounts.find({}).toArray(function(err, results) {
     var usuarios = [];
+    var usuario = null;
     for (var i = 0; i < results.length; i++) {
-      usuarios.push(results[i].username);
+      usuario = {"username": results[i].username,"email": results[i].email,"profilePic" : results[i].profilePic, "admin" : results[i].admin};
+      usuarios.push(usuario);
     }
     console.dir(usuarios);
 
