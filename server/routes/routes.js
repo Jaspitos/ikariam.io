@@ -4,11 +4,11 @@
  */
 
 //Scope variables
-var multer = require('multer');
-var fileUpload = multer();
-var logindao = require('../dao/logindao');
-var profiledao = require('../dao/profiledao');
-var admindao = require('../dao/admindao');
+const multer = require('multer'),
+    fileUpload = multer(),
+    logindao = require('../dao/logindao'),
+    profiledao = require('../dao/profiledao'),
+    admindao = require('../dao/admindao');
 
 module.exports = function(app) {
 

@@ -16,7 +16,7 @@ exports.getUserlist = function(user,callback){
       usuario = {"username": results[i].username,"email": results[i].email,"profilePic" : results[i].profilePic, "admin" : results[i].admin};
       usuarios.push(usuario);
     }
-    console.dir(usuarios);
+    //console.dir(usuarios);
 
     if(err) callback(err,"Fallo la obtencion de los usuarios");
     else callback(usuarios);

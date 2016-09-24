@@ -74,7 +74,7 @@
                                     <%= userlist[i].admin %>
                                 </th>
                                 <th>
-                                    <button data-target="modal1" class="btn modal-trigger">Kick</button>
+                                    <button id="<%= userlist[i].username %>" class="btn rmv-btn">Kick</button>
                                 </th>
                             </tr>
                             <% } %>
@@ -88,12 +88,11 @@
 
 
 
-    <!-- Modal Trigger -->
-    <a id="modal" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
     <!-- Modal Structure -->
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Echar de la comunidad</h4>
+            <span class="user2rmv"></span>
             <p>Si aceptas expulsarle de la comunidad, serán borrado todos sus datos personales</p>
         </div>
         <div class="modal-footer">
@@ -107,8 +106,13 @@
     <script>
         $(document).ready(function() {
             // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal-trigger').leanModal();
+            //$('.modal-trigger').leanModal();
+
         });
+          $('.rmv-btn').click(function(){
+            $('.user2rmv').html($('.rmv-btn').attr('id'));
+            $('#modal1').openModal();
+          });
     </script>
 
 </body>
