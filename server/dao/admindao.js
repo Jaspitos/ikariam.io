@@ -23,3 +23,10 @@ exports.getUserlist = function(user,callback){
 });
 
 }
+
+//Remove a user selected
+exports.removeUser = function(user,results){
+//TODO: accounts.remove({'username': user});
+
+
+}

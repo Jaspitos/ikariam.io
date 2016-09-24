@@ -5,7 +5,7 @@
         <%= title %>
     </title>
     <link rel="stylesheet" type="text/css" href="css/materialize.css">
-    <link rel="stylesheet" type="text/css" href="css/profile.css">
+    <link rel="stylesheet" type="text/css" href="css/ikariam.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
@@ -14,61 +14,103 @@
 </head>
 
 <body>
-  <nav>
-      <div class="nav-wrapper deep-purple darken-1">
-          <a href="/"><img class="brand-logo responsive-img" src="img/bg-logo4.png" style="padding: 4;"></>
-          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-          <ul class="right hide-on-med-and-down">
+    <nav>
+        <div class="nav-wrapper deep-purple darken-1">
+            <a href="/"><img class="brand-logo responsive-img" src="img/bg-logo4.png" style="padding: 4;">
+                </>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
 
-            <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-30%;"></li>
-            <li><a href="/chat">Chat</a></li>
+                    <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-30%;"></li>
+                    <li><a href="/chat">Chat</a></li>
 
-              <li><a href="#!">Foro</a>
-              </li>
-              <li><a href="#!">Herramientas</a>
-              </li>
-              <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
-              </li>
-              <!-- Dropdown Structure -->
-              <ul id='dropdown1' class='dropdown-content'>
-                  <li class="divider"></li>
-                  <li><a href="#!">Panel de usuario</a>
-                  </li>
-                  <li class="divider"></li>
-                  <li><a id="logout" href="#!">Cerrar sesión</a>
-                  </li>
-              </ul>
-          </ul>
+                    <li><a href="#!">Foro</a>
+                    </li>
+                    <li><a href="#!">Herramientas</a>
+                    </li>
+                    <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
+                    </li>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li class="divider"></li>
+                        <li><a href="#!">Panel de usuario</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a id="logout" href="#!">Cerrar sesión</a>
+                        </li>
+                    </ul>
+                </ul>
 
-      </div>
-  </nav>
-  <div class="container">
-    <div class="row">
-        <!--  -->
-        <div class="col l12 m12 s12">
-      <table class="striped">
-        <thead>
-          <tr>
-              <th data-field="id">Usuarios</th>
-              <th data-field="name">Correo</th>
-              <th data-field="name">Imagen de Perfil</th>
-              <th data-field="name">Expulsar</th>
-              <th data-field="name">Admin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for(var i=0; i< userlist.length ; i++) {%>
-          <tr>
-          <th><%= userlist[i].username %></th><th><%= userlist[i].email %></th><th><%= userlist[i].profilePic %></th><th></th><th><%= userlist[i].admin %></th>
-          </tr>
-          <% } %>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <!--  -->
+            <div class="col l12 m12 s12">
+                <table class="responsive-table striped">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Usuarios</th>
+                            <th data-field="name">Correo</th>
+                            <th data-field="name">Imagen de Perfil</th>
+                            <th data-field="name">Admin</th>
+                            <th data-field="name"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i< userlist.length ; i++) {%>
+                            <tr>
+                                <th>
+                                    <%= userlist[i].username %>
+                                </th>
+                                <th>
+                                    <%= userlist[i].email %>
+                                </th>
+                                <th>
+                                    <%= userlist[i].profilePic %>
+                                </th>
+
+                                <th>
+                                    <%= userlist[i].admin %>
+                                </th>
+                                <th>
+                                    <button data-target="modal1" class="btn modal-trigger">Kick</button>
+                                </th>
+                            </tr>
+                            <% } %>
 
 
-        </tbody>
-      </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
+
+
+    <!-- Modal Trigger -->
+    <a id="modal" class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Echar de la comunidad</h4>
+            <p>Si aceptas expulsarle de la comunidad, serán borrado todos sus datos personales</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </div>
+    </div>
+
+    <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
+    <script src="/js/libs/materialize.js"></script>
+    <script>
+        $(document).ready(function() {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal();
+        });
+    </script>
 
 </body>
+
 </html>

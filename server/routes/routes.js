@@ -23,8 +23,8 @@ module.exports = function(app) {
         logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
             if (o) {
                 profiledao.getProfile(req.session.user, function(o, e) {
-                    if (e) res.render('/');
-                    else if (o) {
+                    //if (e) res.render('/');
+                    if (o) {
                         res.render('inicio', {
                             title: "Inicio",
                             profile: o
@@ -54,6 +54,7 @@ module.exports = function(app) {
                 else {
                     req.session.user = o.username;
                     req.session.passwd = o.password;
+                    req.session.admin = o.admin;
                     res.status(200).send(o);
                 }
             }
@@ -169,16 +170,22 @@ module.exports = function(app) {
     });
 
     app.get('/admin', function(req, res) {
-    //TODO: COMPROBAR SI ES ADMIN ES TRUE
-    admindao.getUserlist(req.session.user, function(o,e){
-    if(o) {
-      profiledao.getProfile(req.session.user, function(ob, err) {
-        console.log(ob);
-      res.render('admin',{title:"Panel de admin", userlist: o, profile: ob });
-    })
-    }
+        //TODO: COMPROBAR SI ES ADMIN ES TRUE
+        if (req.session.admin == true) {
+            admindao.getUserlist(req.session.user, function(o, e) {
+                if (o) {
+                    profiledao.getProfile(req.session.user, function(ob, err) {
+                        console.log(ob);
+                        res.render('admin', {
+                            title: "Panel de admin",
+                            userlist: o,
+                            profile: ob
+                        });
+                    })
+                }
 
-    });
+            });
+        } else res.redirect('/');
     });
 
 
