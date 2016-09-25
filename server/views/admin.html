@@ -92,27 +92,36 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Echar de la comunidad</h4>
-            <span class="user2rmv"></span>
+            <h2 class="user2rmv" style="color:red;"></h2>
             <p>Si aceptas expulsarle de la comunidad, serán borrado todos sus datos personales</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+          <a id="acept-rmv" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
         </div>
+        <form id="form-rmv" action "/admin" method="POST">
+        <input id="input-rmv" name="user" hidden></input>
+        </form>
     </div>
 
     <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
     <script src="/js/libs/materialize.js"></script>
     <script>
         $(document).ready(function() {
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            //$('.modal-trigger').leanModal();
+            $('.rmv-btn').click(function() {
+                var usr2rmv = this.id;
+                $('.user2rmv').html(usr2rmv);
+                $('#input-rmv').attr('value',usr2rmv);
+                $('#modal1').openModal();
+            });
+
+            $('#acept-rmv').click(function(){
+              $('#form-rmv').submit();
+            });
+
+
 
         });
-          $('.rmv-btn').click(function(){
-            $('.user2rmv').html($('.rmv-btn').attr('id'));
-            $('#modal1').openModal();
-          });
     </script>
 
 </body>

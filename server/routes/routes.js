@@ -169,13 +169,17 @@ module.exports = function(app) {
         })
     });
 
+    /*
+     * @Route: admin.html
+     * @Desc: Shows admin panel
+     * @Http-type: GET
+     */
     app.get('/admin', function(req, res) {
         //TODO: COMPROBAR SI ES ADMIN ES TRUE
         if (req.session.admin == true) {
             admindao.getUserlist(req.session.user, function(o, e) {
                 if (o) {
                     profiledao.getProfile(req.session.user, function(ob, err) {
-                        console.log(ob);
                         res.render('admin', {
                             title: "Panel de admin",
                             userlist: o,
@@ -188,6 +192,21 @@ module.exports = function(app) {
         } else res.redirect('/');
     });
 
+    /*
+     * @Route: admin.html
+     * @Desc: Removes a select user then redirects to app.get('/admin')
+     * @Http-type: post
+     */
+    app.post('/admin', (req, res) => {
+        if (req.session.admin == true) {
+            admindao.removeUser(req.body['user'], function(o, e) {
+                if (o) {
+                    res.redirect('/admin');
+                }
+            });
+        } else res.redirect('/');
+
+    });
 
     /*
      * @Route: inicio.html
