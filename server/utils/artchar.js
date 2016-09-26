@@ -11,5 +11,4 @@ console.log(chalk.bold.red(" | | | ' <  / _ \\ |   / | |  / _ \\ | |\\/| | _  | 
 console.log(chalk.bold.red("|___||_|\\_\\/_/ \\_\\|_|_\\|___|/_/ \\_\\|_|  |_|(_)|___|\\___/ "));
 console.log("");
 console.log("");
-console.log("");
 };
