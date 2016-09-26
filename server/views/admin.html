@@ -50,9 +50,9 @@
                 <table class="responsive-table striped">
                     <thead>
                         <tr>
+                            <th data-field="name">Imagen de Perfil</th>
                             <th data-field="id">Usuarios</th>
                             <th data-field="name">Correo</th>
-                            <th data-field="name">Imagen de Perfil</th>
                             <th data-field="name">Admin</th>
                             <th data-field="name"></th>
                         </tr>
@@ -61,13 +61,13 @@
                         <% for(var i=0; i< userlist.length ; i++) {%>
                             <tr>
                                 <th>
+                                    <image class="responsive-img" src="<%= userlist[i].profilePic %>" style="height:50px;width:70px;margin-left:15%;" />
+                                </th>
+                                <th>
                                     <%= userlist[i].username %>
                                 </th>
                                 <th>
                                     <%= userlist[i].email %>
-                                </th>
-                                <th>
-                                    <%= userlist[i].profilePic %>
                                 </th>
 
                                 <th>
@@ -96,11 +96,11 @@
             <p>Si aceptas expulsarle de la comunidad, serán borrado todos sus datos personales</p>
         </div>
         <div class="modal-footer">
-          <a id="acept-rmv" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
-          <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+            <a id="acept-rmv" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
         </div>
         <form id="form-rmv" action "/admin" method="POST">
-        <input id="input-rmv" name="user" hidden></input>
+            <input id="input-rmv" name="user" hidden></input>
         </form>
     </div>
 
@@ -111,12 +111,12 @@
             $('.rmv-btn').click(function() {
                 var usr2rmv = this.id;
                 $('.user2rmv').html(usr2rmv);
-                $('#input-rmv').attr('value',usr2rmv);
+                $('#input-rmv').attr('value', usr2rmv);
                 $('#modal1').openModal();
             });
 
-            $('#acept-rmv').click(function(){
-              $('#form-rmv').submit();
+            $('#acept-rmv').click(function() {
+                $('#form-rmv').submit();
             });
 
 

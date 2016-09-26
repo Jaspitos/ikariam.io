@@ -1,3 +1,36 @@
 .container {
     margin-top: 5%;
 }
+
+.btn1
+{
+    font-size: 17px;
+
+    position: relative;
+
+    display: block;
+
+    margin: auto;
+    padding: 10px 30px;
+
+    cursor: pointer;
+
+    color: #fff;
+    border: 0;
+    border-radius: 3px;
+    outline: none;
+    background: #2ecc71;
+    box-shadow: 0 5px 1px #27ae60;
+}
+
+.btn1:hover
+{
+    background: #27ae60;
+    box-shadow: 0 5px 1px #145b32;
+}
+
+.btn1:active
+{
+    border-top: 5px solid white;
+    box-shadow: none;
+}
