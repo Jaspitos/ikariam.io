@@ -12,12 +12,12 @@ const multer = require('multer'),
 
 module.exports = function(app) {
 
-    /*
+    /**
      * @Route: principal.html
      * @Desc: Singn up a new user
      * @Http-type: GET
      */
-    app.get('/', function(req, res) {
+    app.get('/', (req, res) => {
 
         // attempt automatic login //
         logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
@@ -44,7 +44,7 @@ module.exports = function(app) {
      * @Desc: Submit login
      * @Http-type: POST
      */
-    app.post('/', function(req, res) {
+    app.post('/', (req, res) => {
         logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o) {
             if (!o) {
                 res.status(400).send(e);
@@ -66,7 +66,7 @@ module.exports = function(app) {
      * @Desc: Takes you to signup view
      * @Http-type: GET
      */
-    app.get('/signup', function(req, res) {
+    app.get('/signup', (req, res) => {
         res.render('signup', {
             title: 'Registro'
         });
@@ -77,7 +77,7 @@ module.exports = function(app) {
      * @Desc: Submits signup credentials
      * @Http-type: POST
      */
-    app.post('/signup', function(req, res) {
+    app.post('/signup', (req, res) => {
 
         logindao.checkKey(req.body['keyp'], function(er, ob) {
             if (ob == true) {
@@ -110,7 +110,7 @@ module.exports = function(app) {
      * @Desc: Redirects you to app.get('/')
      * @Http-type: GET
      */
-    app.get('/inicio', function(req, res) {
+    app.get('/inicio', (req, res) => {
         res.render('/');
     });
 
@@ -119,7 +119,7 @@ module.exports = function(app) {
      * @Desc: Takes your to chat view
      * @Http-type: GET
      */
-    app.get('/chat', function(req, res) {
+    app.get('/chat', (req, res) => {
         // create a new user
         profiledao.getProfile(req.session.user, function(o, e) {
             if (e) res.render('/');
@@ -138,7 +138,7 @@ module.exports = function(app) {
      * @Desc: Takes you to profile view
      * @Http-type: GET
      */
-    app.get('/profile', function(req, res) {
+    app.get('/profile', (req, res) => {
         // create a new user
         profiledao.getProfile(req.session.user, function(o, e) {
             if (e) res.render('/');
@@ -156,7 +156,7 @@ module.exports = function(app) {
      * @Desc: Updates user picture
      * @Http-type: POST
      */
-    app.post('/profile', fileUpload.single('profilepic'), function(req, res) {
+    app.post('/profile', fileUpload.single('profilepic'), (req, res) => {
         profiledao.changeImg(req.session.user, req.file.buffer, function(o, e) {
             if (o) {
                 profiledao.getProfile(req.session.user, function(o, e) {
@@ -174,7 +174,7 @@ module.exports = function(app) {
      * @Desc: Shows admin panel
      * @Http-type: GET
      */
-    app.get('/admin', function(req, res) {
+    app.get('/admin', (req, res) => {
         //TODO: COMPROBAR SI ES ADMIN ES TRUE
         if (req.session.admin == true) {
             admindao.getUserlist(req.session.user, function(o, e) {
@@ -213,7 +213,7 @@ module.exports = function(app) {
      * @Desc: Kills user session
      * @Http-type: POST
      */
-    app.post('/logout', function(req, res) {
+    app.post('/logout', (req, res) => {
         req.session.destroy(function(e) {
             res.status(200).send('deleted');
         });
