@@ -16,6 +16,10 @@ var chat = io.of('/chatNsp');
 var zaros = io.of('/inicioNsp');
 var chalk = require('chalk');
 
+
+require('./server/utils/artchar')();
+
+
 //Clients list connection
 var allClientsChat = [];
 var allClientsInicio = [];
