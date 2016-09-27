@@ -4,12 +4,11 @@
  */
 
 /*Instance of needed modules*/
-var dbConfig = require('../properties/dbConfig');
-var accounts = dbConfig.db.collection('users');
+var User = require('../models/user');
 
 exports.getUserlist = function(user, callback) {
     //TODO:Comprueba si el usuario es admin, tambien lo comprueba en el routes
-    accounts.find({}).toArray(function(err, results) {
+    User.find({}).toArray(function(err, results) {
         var usuarios = [];
         var usuario = null;
         for (var i = 0; i < results.length; i++) {
@@ -32,7 +31,7 @@ exports.getUserlist = function(user, callback) {
 //Remove a user selected
 exports.removeUser = function(user, callback) {
 
-    accounts.remove({'username': user}, function(e, o) {
+    User.remove({'username': user}, function(e, o) {
         if (e) {
             callback(null, e);
         } else

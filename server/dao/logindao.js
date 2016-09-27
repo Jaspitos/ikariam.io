@@ -4,25 +4,13 @@
 			 */
 
 			/*Instance of needed modules*/
-			var mongoose = require('mongoose');
 			var User = require('../models/user');
 			var chalk = require('chalk');
-			var dbConfig = require('../properties/dbConfig');
-			var accounts = dbConfig.db.collection('users');
-			var codes = dbConfig.db.collection('codes');
-
-			/*Check enviromemnt*/
-			if(process.env.NODE_ENV == 'development')
-			{
-				mongoose.connect('mongodb://localhost/ikariam');
-			}
-			else{
-				mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
-			}
+			var Codes = require('../models/code')
 
 			//dao loggin checking cookies
 			exports.autoLogin = function(user, pass, callback) {
-			    accounts.findOne({
+			    User.findOne({
 			        username: user
 			    }, function(e, o) {
 			        if (o) {
@@ -35,7 +23,7 @@
 
 			//dao login when we use manual logins
 			exports.manualLogin = function(user, pass, callback) {
-			    accounts.findOne({
+			    User.findOne({
 			        username: user
 			    }, function(e, o) {
 
@@ -59,7 +47,7 @@
 
 			exports.checkUser = function(user, callback) {
 
-			    accounts.findOne({
+			    User.findOne({
 			        username: user
 			    }, function(e, o) {
 			        if (e) {
@@ -74,7 +62,7 @@
 
 			exports.checkEmail = function(mail, callback) {
 
-			    accounts.findOne({
+			    User.findOne({
 			        email: mail
 			    }, function(e, o) {
 			        if (e) {
@@ -89,7 +77,7 @@
 
 			exports.checkKey = function(clave, callback) {
 
-			    codes.findOne({
+			    Codes.findOne({
 			        key: clave
 			    }, function(e, o) {
 			        if (e) {
@@ -99,7 +87,7 @@
 			        } else {
 			            if (clave != "zaroskey") {
 			                try {
-			                    codes.deleteOne({
+			                    Codes.deleteOne({
 			                        "key": clave
 			                    });
 			                    callback(null, true);

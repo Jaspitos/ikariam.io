@@ -5,8 +5,7 @@
 
 /*Instance of needed modules*/
 var cloudinary = require('cloudinary');
-var dbConfig = require('../properties/dbConfig');
-var accounts = dbConfig.db.collection('users');
+var User = require('../models/user');
 
 //Se conecta al cdn cloudinary
 cloudinary.config({
@@ -19,7 +18,7 @@ cloudinary.config({
 
 exports.getProfile = function(username, callback) {
 
-    accounts.findOne({
+    User.findOne({
         username: username
     }, function(e, o) {
         if (o) {
@@ -30,14 +29,26 @@ exports.getProfile = function(username, callback) {
 
 }
 
+exports.changeImg = function(u, img, callback) {
+
+    var buffer = new Buffer(img).toString('base64');
+    cloudinary.uploader.upload("data:image/png;base64," + buffer, function(result) {
+      User.findOne({username: u}, (err, user) => {
+        user.profilePic = result.url;
+
+        user.save((err) => {
+          if(err)
+            throw err;
+            else {
+              callback(true);
+            }
+        });
 
 
-exports.changeImg = function(user, img, callback) {
-        //var accounts = db.collection('users');
-        var buffer = new Buffer(img).toString('base64');
-        cloudinary.uploader.upload("data:image/png;base64,"+buffer, function(result) { accounts.updateOne({username: user}, { $set: {profilePic: result.url}}, {upsert: true}); callback(true);},
-          {
-            public_id: user
-          })
+      });
 
-}
+    }, {public_id: u});
+
+
+
+  }

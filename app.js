@@ -4,17 +4,18 @@
  */
 
 //Importing modules
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var dbprop = require('./server/properties/db-properties');
-var io = require('socket.io')(http);
-var chat = io.of('/chatNsp');
-var zaros = io.of('/inicioNsp');
-var chalk = require('chalk');
+var express = require('express'),
+    app     = express(),
+    http    = require('http').Server(app),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    mongoose = require('mongoose'),
+    MongoStore = require('connect-mongo')(session),
+    dbprop = require('./server/properties/db-properties'),
+    io = require('socket.io')(http),
+    chat = io.of('/chatNsp'),
+    zaros = io.of('/inicioNsp'),
+    chalk = require('chalk');
 
 
 require('./server/utils/artchar')();
@@ -32,6 +33,16 @@ else
 
 
 console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(process.env.NODE_ENV));
+
+/*Check enviromemnt*/
+if(process.env.NODE_ENV == 'development')
+{
+  mongoose.connect('mongodb://localhost/ikariam');
+  console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
+}
+else{
+  mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
+}
 
 
 //App settings
