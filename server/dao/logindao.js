@@ -127,23 +127,14 @@
 
 			    });
 
-			    newUser.save(function(err, o) {
-			        if (err)
-							console.log(err);
-
-			            callback(null, err);
-
-			        if (o) {
-			            // save the user
-			            newUser.save();
-			            mongoose.connection.close();
-			            callback(null, 'User created!');
-			        }
+			        newUser.save(function(err){
+								console.log(err);
+								callback(err);
+							});
+			        mongoose.connection.close();
+			        callback(null, 'User created!');
 
 
-
-
-			    });
 
 			};
 
