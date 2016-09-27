@@ -5,7 +5,7 @@
 
 			/*Instance of needed modules*/
 			var mongoose = require('mongoose');
-			var user = require('../models/user');
+			var User = require('../models/user');
 			var chalk = require('chalk');
 			var dbConfig = require('../properties/dbConfig');
 			var accounts = dbConfig.db.collection('users');
@@ -118,7 +118,7 @@
 
 			exports.signUp = function(email, username, pass, callback) {
 
-			    var newUser = user({
+			    var newUser = new User({
 			        email: email,
 			        username: username,
 			        password: pass,
@@ -127,11 +127,7 @@
 
 			    });
 
-			        newUser.save(function(err){
-								console.log(err);
-								callback(err);
-							});
-			        mongoose.connection.close();
+			        newUser.save();
 			        callback(null, 'User created!');
 
 
