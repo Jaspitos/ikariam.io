@@ -8,7 +8,7 @@ var User = require('../models/user');
 
 exports.getUserlist = function(user, callback) {
     //TODO:Comprueba si el usuario es admin, tambien lo comprueba en el routes
-    User.find({}).toArray(function(err, results) {
+    User.find({}, (err, results) => {
         var usuarios = [];
         var usuario = null;
         for (var i = 0; i < results.length; i++) {
