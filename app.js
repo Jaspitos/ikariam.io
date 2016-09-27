@@ -89,7 +89,7 @@ zaros.use(function(socket, next) {
 
 
 //Module of routes conf
-require('./server/routes/routes')(app);
+app.use(require('./server/routes/routes'));
 
 //Starts general Chat
 chat.on('connection', function(socket) {
