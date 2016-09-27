@@ -23,7 +23,7 @@ exports.getUserlist = function(user, callback) {
         }
         //console.dir(usuarios);
 
-        if (err) callback(err, "Fallo la obtencion de los usuarios");
+        if (err) callback(err, "Falló la obtencion de los usuarios");
         else callback(usuarios);
     });
 

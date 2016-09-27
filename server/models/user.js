@@ -11,8 +11,8 @@
  var userSchema = new schema({
 
 	email: String,
- 	username: { type: String, required: true, unique: true},
- 	password: {type: String, required: true, unique: true},
+ 	username: String,
+ 	password: String,
   profilePic: String,
  	admin: Boolean
 
