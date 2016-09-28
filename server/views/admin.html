@@ -33,7 +33,7 @@
                     <!-- Dropdown Structure -->
                     <ul id='dropdown1' class='dropdown-content'>
                         <li class="divider"></li>
-                        <li><a href="#!">Panel de usuario</a>
+                        <li><a href="/profile">Panel de usuario</a>
                         </li>
                         <li class="divider"></li>
                         <li><a id="logout" href="#!">Cerrar sesión</a>
@@ -69,9 +69,8 @@
                                 <th>
                                     <%= userlist[i].email %>
                                 </th>
-
                                 <th>
-                                    <%= userlist[i].admin %>
+                                  <%= !userlist[i].admin ? 'No' : 'Sí'; %>
                                 </th>
                                 <th>
                                     <button id="<%= userlist[i].username %>" class="btn rmv-btn">Kick</button>
@@ -106,21 +105,17 @@
 
     <script src='https://code.jquery.com/jquery-2.2.0.min.js'></script>
     <script src="/js/libs/materialize.js"></script>
+    <script src="/js/views/admin.js"></script>
+    <script src="/js/views/logout.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.rmv-btn').click(function() {
-                var usr2rmv = this.id;
-                $('.user2rmv').html(usr2rmv);
-                $('#input-rmv').attr('value', usr2rmv);
-                $('#modal1').openModal();
-            });
-
-            $('#acept-rmv').click(function() {
-                $('#form-rmv').submit();
-            });
-
-
-
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrain_width: false,
+            hover: true,
+            gutter: 0,
+            belowOrigin: true,
+            alignment: 'right'
         });
     </script>
 

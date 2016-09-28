@@ -34,6 +34,7 @@ else
 
 console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(process.env.NODE_ENV));
 
+mongoose.Promise = global.Promise;
 /*Check enviromemnt*/
 if(process.env.NODE_ENV == 'development')
 {
@@ -165,5 +166,5 @@ zaros.on('connection', function(socket) {
 
 //Starts server
 http.listen(app.get('port'), function() {
-    console.log(chalk.bold.green('Express server listening on port ' + app.get('port')));
+    console.log(chalk.bold.bgGreen(`Express server listening on port: ${app.get('port')}`));
 });
