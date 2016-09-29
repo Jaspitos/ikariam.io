@@ -18,9 +18,12 @@ module.exports = {
 
 function autoLogin(req, res)
 {
-  logindao.autoLogin(req.session.user, req.session.passwd, function(o) {
+  logindao.autoLogin(req.session.user, req.session.passwd, function(o, e) {
+    console.log("la o vale "+o);
+    console.log("la pwS vale "+req.session.passwd);
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
+
               //if (e) res.render('/');
               if (o) {
                   res.render('inicio', {
@@ -38,17 +41,22 @@ function autoLogin(req, res)
 }
 
 function manualLogin(req, res){
-  logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(e, o) {
+  logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(o, e) {
       if (!o) {
           res.status(400).send(e);
       } else {
+
           if (req.session.user == o.username && req.session.passwd == o.password)
-              res.status(200).send(o);
+          {
+            res.status(200).send(o);
+          }
+
           else {
               req.session.user = o.username;
               req.session.passwd = o.password;
               req.session.admin = o.admin;
               res.status(200).send(o);
+
           }
       }
   });

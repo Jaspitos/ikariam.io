@@ -6,10 +6,19 @@
 			/*Instance of needed modules*/
 			var User = require('../models/user');
 			var chalk = require('chalk');
-			var Codes = require('../models/code')
+			var Codes = require('../models/code');
+
+			module.exports = {
+				autoLogin: autoLogin,
+				manualLogin: manualLogin,
+				checkUser: checkUser,
+				checkEmail: checkEmail,
+				checkKey: checkKey,
+				signUp: signUp
+			}
 
 			//dao loggin checking cookies
-			exports.autoLogin = function(user, pass, callback) {
+			function autoLogin(user, pass, callback) {
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -22,7 +31,8 @@
 
 
 			//dao login when we use manual logins
-			exports.manualLogin = function(user, pass, callback) {
+			function manualLogin(user, pass, callback) {
+				var passSecure;
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -30,22 +40,23 @@
 			        if (e) {
 			            callback(null, e);
 			        } else if (o == null) {
-			            callback('invalidLogin');
+			            callback(null, 'invalidLogin');
 
 
 			        } else {
-			            validatePassword(pass, o.password, function(err, res) {
+									passSecure = encrypt(pass);
+			            validatePassword(passSecure, o.password, function(err, res) {
 			                if (res) {
-			                    callback(null, o);
+			                    callback(o);
 			                } else {
-			                    callback('invalidLogin');
+			                    callback(null, 'invalidLogin');
 			                }
 			            });
 			        }
 			    });
 			}
 
-			exports.checkUser = function(user, callback) {
+			function checkUser(user, callback) {
 
 			    User.findOne({
 			        username: user
@@ -60,7 +71,7 @@
 			    });
 			}
 
-			exports.checkEmail = function(mail, callback) {
+			function checkEmail(mail, callback) {
 
 			    User.findOne({
 			        email: mail
@@ -75,7 +86,7 @@
 			    });
 			}
 
-			exports.checkKey = function(clave, callback) {
+			function checkKey(clave, callback) {
 
 			    Codes.findOne({
 			        key: clave
@@ -104,12 +115,13 @@
 			    });
 			}
 
-			exports.signUp = function(email, username, pass, callback) {
+			function signUp(email, username, pass, callback) {
 
+					var passSecure = encrypt(pass);
 			    var newUser = new User({
 			        email: email,
 			        username: username,
-			        password: pass,
+			        password: passSecure,
 			        profilePic: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
 			        admin: false
 
@@ -127,17 +139,25 @@
 			 *internal functions
 			 */
 
-			var validatePassword = function(insertedPass, dbPass, callback) {
-			    callback(null, dbPass === insertedPass);
-			}
+	 // Nodejs encryption with CTR
+	 var crypto = require('crypto'),
+	     algorithm = 'aes-256-ctr',
+	     password = 'd6F3Efeq';
 
-			var md5 = function(str) {
-			    return crypto.createHash('md5').update(str).digest('hex');
-			}
+	 function encrypt(text){
+	   var cipher = crypto.createCipher(algorithm,password)
+	   var crypted = cipher.update(text,'utf8','hex')
+	   crypted += cipher.final('hex');
+	   return crypted;
+	 }
 
-			var validatePasswordHashed = function(plainPass, hashedPass, callback) {
-			    var salt = hashedPass.substr(0, 10);
-			    var validHash = salt + md5(plainPass + salt);
-			    //console.log(validHash);
-			    callback(null, hashedPass === validHash);
-			}
+	 function decrypt(text){
+	   var decipher = crypto.createDecipher(algorithm,password)
+	   var dec = decipher.update(text,'hex','utf8')
+	   dec += decipher.final('utf8');
+	   return dec;
+	 }
+
+	 var validatePassword = function(insertedPass, dbPass, callback) {
+			 callback(null, dbPass === insertedPass);
+	 }
