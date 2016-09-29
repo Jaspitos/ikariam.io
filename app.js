@@ -14,16 +14,11 @@ var express = require('express'),
     dbprop = require('./server/properties/db-properties'),
     io = require('socket.io')(http),
     chat = io.of('/chatNsp'),
-    zaros = io.of('/inicioNsp'),
+    inicio = io.of('/inicioNsp'),
     chalk = require('chalk');
 
 
 require('./server/utils/artchar')();
-
-
-//Clients list connection
-var allClientsChat = [];
-var allClientsInicio = [];
 
 //Defining eviroment variables
 if (app.get('env') == 'development')
@@ -95,13 +90,19 @@ chat.use(function(socket, next) {
 });
 
 //Une sessions con socket.io
-zaros.use(function(socket, next) {
+inicio.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res, next);
 });
 
 
 //Module of routes conf
 app.use(require('./server/routes/routes'));
+
+
+//Clients list connection
+var allClientsChat = [],
+  allClientsInicio = [];;
+
 
 //Starts general Chat
 chat.on('connection', function(socket) {
@@ -139,7 +140,7 @@ chat.on('connection', function(socket) {
 //---------------------------------------------------------------------------------------------------------------------------------//
 
 //Usuarios conectados en /inicio
-zaros.on('connection', function(socket) {
+inicio.on('connection', function(socket) {
     //Defining message object to be send to client chat
 
     var user = socket.request.session.user;
@@ -148,7 +149,7 @@ zaros.on('connection', function(socket) {
     if (allClientsInicio.indexOf(user) == -1) //Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
     {
         allClientsInicio.unshift(user); //Se inserta el usuario en el array por el principio			unshift --> array <-- push
-        zaros.emit('newConnection', user, allClientsInicio);
+        inicio.emit('newConnection', user, allClientsInicio);
     } else {
         yaExiste = true;
         socket.disconnect();
@@ -158,7 +159,7 @@ zaros.on('connection', function(socket) {
         if (!yaExiste)
             allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
 
-        zaros.emit('disconnect', user, allClientsInicio);
+        inicio.emit('disconnect', user, allClientsInicio);
     });
 
 });

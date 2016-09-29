@@ -19,8 +19,6 @@ module.exports = {
 function autoLogin(req, res)
 {
   logindao.autoLogin(req.session.user, req.session.passwd, function(o, e) {
-    console.log("la o vale "+o);
-    console.log("la pwS vale "+req.session.passwd);
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
 
