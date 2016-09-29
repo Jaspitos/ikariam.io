@@ -116,6 +116,7 @@ chat.on('connection', function(socket) {
         chat.emit('newConnection', user, allClientsChat);
     } else {
         yaExiste = true;
+        socket.disconnect();
     }
 
     socket.on('chat message', function(msg) {
