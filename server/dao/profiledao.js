@@ -7,15 +7,18 @@
 var cloudinary = require('cloudinary');
 var User = require('../models/user');
 
-//Se conecta al cdn cloudinary
+/*Cloudinary api connection*/
 cloudinary.config({
     cloud_name: 'dvy0ekqee',
     api_key: '543871316948421',
     api_secret: '8BsClfdwloSRbG_Y92Qg4mvsvSg'
 });
 
-/*Retreives user personal information */
-
+/**
+ *@desc: Retreives user personal information
+ *@param: username
+ *@return: profile object
+ */
 exports.getProfile = function(username, callback) {
 
     User.findOne({
@@ -29,6 +32,12 @@ exports.getProfile = function(username, callback) {
 
 }
 
+/**
+ *@desc: changes user picture to desired one
+ *@param: u
+ *@param: img
+ *@return: boolean value
+ */
 exports.changeImg = function(u, img, callback) {
 
     var buffer = new Buffer(img).toString('base64');
