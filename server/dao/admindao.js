@@ -1,11 +1,16 @@
 /**
  *@Author: Lorenzo y Javier
- *@Desc: Admin will have privilage to mage certain staff
+ *@Desc: Admin will have privilage to manage certain staff
  */
 
 /*Instance of needed modules*/
 var User = require('../models/user');
 
+/**
+ *@desc: get a list of users from account bd
+ *@param: user
+ *@return: list of users
+ */
 exports.getUserlist = function(user, callback) {
     //TODO:Comprueba si el usuario es admin, tambien lo comprueba en el routes
     User.find({}, (err, results) => {
@@ -18,17 +23,18 @@ exports.getUserlist = function(user, callback) {
                 "profilePic": results[i].profilePic,
                 "admin": results[i].admin
             };
-            usuarios.push(usuario);
+            usuarios.push(usuario, null);
         }
-        //console.dir(usuarios);
-
-        if (err) callback(err, "Falló la obtencion de los usuarios");
-        else callback(usuarios);
+        if (err) callback(null, err);
+        else callback(usuarios, null);
     });
-
 }
 
-//Remove a user selected
+/**
+ *@desc: remove a user selected
+ *@param: user
+ *@return: boolean value
+ */
 exports.removeUser = function(user, callback) {
 
     User.remove({'username': user}, function(o, e) {
@@ -38,6 +44,4 @@ exports.removeUser = function(user, callback) {
             callback(null, true);
 
     });
-
-
 }

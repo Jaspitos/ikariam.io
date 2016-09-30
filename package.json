@@ -1,6 +1,6 @@
 {
   "name": "ikariam",
-  "version": "1.0.0",
+  "version": "Alpha",
   "description": "Un proyecto para controlarlos a todos, cya nerds",
   "main": "app.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "debug": "debug app.js"
   },
   "author": "Javier y Lorenzo",
-  "license": "ISC",
+  "license": "TODO",
   "dependencies": {
     "body-parser": "^1.15.2",
     "chalk": "^1.1.3",

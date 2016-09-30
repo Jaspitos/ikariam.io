@@ -9,30 +9,39 @@
 			var Codes = require('../models/code');
 
 			module.exports = {
-				autoLogin: autoLogin,
-				manualLogin: manualLogin,
-				checkUser: checkUser,
-				checkEmail: checkEmail,
-				checkKey: checkKey,
-				signUp: signUp
+			    autoLogin: autoLogin,
+			    manualLogin: manualLogin,
+			    checkUser: checkUser,
+			    checkEmail: checkEmail,
+			    checkKey: checkKey,
+			    signUp: signUp
 			}
 
-			//dao loggin checking cookies
+			/**
+			 *@desc: validates session credentials
+			 *@param: user
+			 *@param: pass
+			 *@return:
+			 */
 			function autoLogin(user, pass, callback) {
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
 			        if (o) {
-			            o.password == pass ? callback(o) : callback(null);
+			            o.password == pass ? callback(o) : callback(null); //TODO: COMPROBAR ESTE OPERADOR TERNARIO XD
 			        } else
 			            callback(null);
 			    })
 			}
 
-
-			//dao login when we use manual logins
+			/**
+			 *@desc: validates if user introduced credentials are correct
+			 *@param: user
+			 *@param: pass
+			 *@return:either a success login o/ invalid login
+			 */
 			function manualLogin(user, pass, callback) {
-				var passSecure;
+			    var passSecure;
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -44,7 +53,7 @@
 
 
 			        } else {
-									passSecure = encrypt(pass);
+			            passSecure = encrypt(pass);
 			            validatePassword(passSecure, o.password, function(err, res) {
 			                if (res) {
 			                    callback(o);
@@ -56,6 +65,11 @@
 			    });
 			}
 
+			/**
+			 *@desc: checks if user already exists
+			 *@param: user
+			 *@return: a bolean value
+			 */
 			function checkUser(user, callback) {
 
 			    User.findOne({
@@ -66,11 +80,16 @@
 			        } else if (o == null) {
 			            callback(null, false);
 			        } else
-			            callback('userExists', true);
+			            callback('userExists', true); //TODO:deberia ser suficiente con poner true
 
 			    });
 			}
 
+			/**
+			 *@desc: checks if email already exists
+			 *@param: mail
+			 *@return: boolean value
+			 */
 			function checkEmail(mail, callback) {
 
 			    User.findOne({
@@ -86,6 +105,11 @@
 			    });
 			}
 
+			/**
+			 *@desc: validates keypass used on signup
+			 *@param: clave
+			 *@return: boolean value
+			 */
 			function checkKey(clave, callback) {
 
 			    Codes.findOne({
@@ -97,66 +121,69 @@
 			            callback('invalidKey', false);
 			        } else {
 			            if (clave != process.env.KEY) {
-											Codes.remove({'key': clave}, function(e, o) {
-													if (e) {
-															callback(null, e);
-													} else
-															callback(null, true);
+			                Codes.remove({
+			                    'key': clave
+			                }, function(e, o) {
+			                    if (e) {
+			                        callback(null, e);
+			                    } else
+			                        callback(null, true);
 
-											});
+			                });
 
 			            } else callback(null, true);
 
 			        }
 
-
-
 			    });
 			}
 
+			/**
+			 *@desc: validates inputted key
+			 *@param: email
+			 *@param: username
+			 *@param: pass
+			 *@return: return if user has been created
+			 */
 			function signUp(email, username, pass, callback) {
 
-					var passSecure = encrypt(pass);
+			    var passSecure = encrypt(pass);
 			    var newUser = new User({
 			        email: email,
 			        username: username,
 			        password: passSecure,
 			        profilePic: 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png',
 			        admin: false
-
 			    });
-
-			        newUser.save();
-			        callback(null, 'User created!');
-
-
-
+			    newUser.save();
+			    callback(null, 'User created!');
 			};
 
+			/*********************************************************
+			        					PRIVATE FUNCTIONS
+		  **********************************************************/
 
-			/*
-			 *internal functions
-			 */
+			// Nodejs encryption with CTR
+			var crypto = require('crypto'),
+			    algorithm = 'aes-256-ctr',
+			    password = 'd6F3Efeq';
+			//encrypt text
+			function encrypt(text) {
+			    var cipher = crypto.createCipher(algorithm, password)
+			    var crypted = cipher.update(text, 'utf8', 'hex')
+			    crypted += cipher.final('hex');
+			    return crypted;
+			}
 
-	 // Nodejs encryption with CTR
-	 var crypto = require('crypto'),
-	     algorithm = 'aes-256-ctr',
-	     password = 'd6F3Efeq';
+			//descrypted text
+			function decrypt(text) {
+			    var decipher = crypto.createDecipher(algorithm, password)
+			    var dec = decipher.update(text, 'hex', 'utf8')
+			    dec += decipher.final('utf8');
+			    return dec;
+			}
 
-	 function encrypt(text){
-	   var cipher = crypto.createCipher(algorithm,password)
-	   var crypted = cipher.update(text,'utf8','hex')
-	   crypted += cipher.final('hex');
-	   return crypted;
-	 }
-
-	 function decrypt(text){
-	   var decipher = crypto.createDecipher(algorithm,password)
-	   var dec = decipher.update(text,'hex','utf8')
-	   dec += decipher.final('utf8');
-	   return dec;
-	 }
-
-	 var validatePassword = function(insertedPass, dbPass, callback) {
-			 callback(null, dbPass === insertedPass);
-	 }
+			//checks if plain text matches up with encrypted one
+			var validatePassword = function(insertedPass, dbPass, callback) {
+			    callback(null, dbPass === insertedPass);
+			}
