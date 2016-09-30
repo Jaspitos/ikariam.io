@@ -1,3 +1,4 @@
+require('dotenv').config();
 /**
  *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
@@ -33,11 +34,11 @@ mongoose.Promise = global.Promise;
 /*Check enviromemnt*/
 if(process.env.NODE_ENV == 'development')
 {
-  mongoose.connect('mongodb://localhost/ikariam');
+  mongoose.connect(process.env.DBL_URI);
   console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
 }
 else{
-  mongoose.connect('mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam');
+  mongoose.connect(process.env.DBC_URI);
 }
 
 
@@ -57,16 +58,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-
-dbprop = dbprop.loadDbProperties(process.env.NODE_ENV);
-var dbHost = dbprop['app'].dbHost;
-var dbPort = dbprop.dbPort;
-var dbName = dbprop.dbName;
-
-//TODO
-var dbURL = 'mongodb://' + dbHost + ':' + dbPort + '/' + dbName;
+var dbURL = process.env.DBL_URI;
 if (app.get('env') == 'production') {
-    dbURL = 'mongodb://devel:vivaeta@ds021036.mlab.com:21036/ikariam';
+    dbURL = process.env.DBC_URI;
 }
 
 //Defining session variable

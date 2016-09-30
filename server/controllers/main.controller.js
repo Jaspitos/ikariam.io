@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 logindao = require('../dao/logindao'),
 profiledao = require('../dao/profiledao'),
 admindao = require('../dao/admindao');

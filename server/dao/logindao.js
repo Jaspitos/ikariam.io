@@ -96,15 +96,14 @@
 			        } else if (o == null) {
 			            callback('invalidKey', false);
 			        } else {
-			            if (clave != "zaroskey") {
-			                try {
-			                    Codes.deleteOne({
-			                        "key": clave
-			                    });
-			                    callback(null, true);
-			                } catch (e) {
-			                    console.log(e);
-			                }
+			            if (clave != process.env.KEY) {
+											Codes.remove({'key': clave}, function(e, o) {
+													if (e) {
+															callback(null, e);
+													} else
+															callback(null, true);
+
+											});
 
 			            } else callback(null, true);
 
