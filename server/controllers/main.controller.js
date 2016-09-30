@@ -101,7 +101,7 @@ function getInicio(req, res) {
 function chat(req, res) {
   // create a new user
   profiledao.getProfile(req.session.user, function(o, e) {
-      if (e) res.render('/');
+      if (e) res.redirect('/');
       else if (o) {
           res.render('chat', {
               title: "Chat",
@@ -115,7 +115,7 @@ function chat(req, res) {
 function getProfile(req, res){
   // create a new user
   profiledao.getProfile(req.session.user, function(o, e) {
-      if (e) res.render('/');
+      if (e) res.redirect('/');
       else if (o) {
           res.render('profile', {
               title: "Perfil",
@@ -156,13 +156,12 @@ function admin(req, res){
 }
 
 function deleteAdmin(req, res){
-  if (req.session.admin == true) {
       admindao.removeUser(req.body['user'], function(o, e) {
           if (o) {
               res.redirect('/admin');
           }
+          else res.redirect('/');
       });
-  } else res.redirect('/');
 }
 
 function logout(req, res){

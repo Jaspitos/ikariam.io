@@ -31,11 +31,11 @@ exports.getUserlist = function(user, callback) {
 //Remove a user selected
 exports.removeUser = function(user, callback) {
 
-    User.remove({'username': user}, function(e, o) {
+    User.remove({'username': user}, function(o, e) {
         if (e) {
-            callback(null, e);
+            callback(e, false);
         } else
-            callback('usuario borrado', true);
+            callback(null, true);
 
     });
 

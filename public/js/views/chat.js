@@ -21,23 +21,24 @@
     });
 
     socket.on('newConnection', function(usr, clientes) {
+      if(usr != 'yaExiste')
         $('#messages').append($('<li>').text(usr + " se ha conectado").css('font-style', 'italic'));
+
         $('#userlist').empty();
         $.each(clientes, function(index, value) {
             $('#userlist').append($('<li>').text("► "+value));
         })
+
     });
 
     socket.on('disconnect', function(msg, clientes) {
-        if (msg != 'io server disconnect') {
-            $('#messages').append($('<li>').text(msg + " se ha desconectado").css('font-style', 'italic'));
-            $('#userlist').empty();
-            $.each(clientes, function(index, value) {
-                $('#userlist').append($('<li>').text("► "+value));
-            })
-        } else
-            $('#messages').append($('<li>').text("Conexión rechazada: ya estás dentro del chat").css('font-style', 'italic'));
-
+      if(msg != 'yaExiste') {
+        $('#messages').append($('<li>').text(msg + " se ha desconectado").css('font-style', 'italic'));
+        $('#userlist').empty();
+        $.each(clientes, function(index, value) {
+            $('#userlist').append($('<li>').text("► "+value));
+        })
+      }
     });
 
     $("#custom").spectrum({

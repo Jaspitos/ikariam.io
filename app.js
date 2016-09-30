@@ -65,7 +65,7 @@ if (app.get('env') == 'production') {
 
 //Defining session variable
 var sessionMiddleware = session({
-    secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -95,7 +95,7 @@ app.use(require('./server/routes/routes'));
 
 //Clients list connection
 var allClientsChat = [],
-  allClientsInicio = [];;
+  allClientsInicio = [];
 
 
 //Starts general Chat
@@ -111,7 +111,7 @@ chat.on('connection', function(socket) {
         chat.emit('newConnection', user, allClientsChat);
     } else {
         yaExiste = true;
-        socket.disconnect();
+        chat.emit('newConnection', 'yaExiste', allClientsChat);
     }
 
     socket.on('chat message', function(msg) {
@@ -124,9 +124,14 @@ chat.on('connection', function(socket) {
 
     socket.on('disconnect', function() {
         if (!yaExiste)
-            allClientsChat.splice(allClientsChat.indexOf(user), 1);
+        {
+          allClientsChat.splice(allClientsChat.indexOf(user), 1);
+          chat.emit('disconnect', user, allClientsChat);
+        }
+        else chat.emit('disconnect', 'yaExiste', allClientsChat);
 
-        chat.emit('disconnect', user, allClientsChat);
+
+
     });
 
 });
@@ -141,19 +146,22 @@ inicio.on('connection', function(socket) {
     var yaExiste = false;
 
     if (allClientsInicio.indexOf(user) == -1) //Si encuentra el usuario devolvera su indice, si no lo encuentra devuelve -1
-    {
         allClientsInicio.unshift(user); //Se inserta el usuario en el array por el principio			unshift --> array <-- push
-        inicio.emit('newConnection', user, allClientsInicio);
-    } else {
+    else
         yaExiste = true;
-        socket.disconnect();
-    }
+
+    inicio.emit('newConnection', allClientsInicio);
+
 
     socket.on('disconnect', function() {
         if (!yaExiste)
-            allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
+        {
+          allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
+          inicio.emit('disconnect', user, allClientsInicio);
+        } else
+          inicio.emit('disconnect', 'yaExiste', allClientsInicio);
 
-        inicio.emit('disconnect', user, allClientsInicio);
+
     });
 
 });
