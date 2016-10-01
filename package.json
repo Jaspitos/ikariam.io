@@ -1,6 +1,6 @@
 {
   "name": "ikariam",
-  "version": "Alpha",
+  "version": "1.0.0",
   "description": "Un proyecto para controlarlos a todos, cya nerds",
   "main": "app.js",
   "scripts": {

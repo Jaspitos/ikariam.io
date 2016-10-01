@@ -182,5 +182,7 @@ function logout(req, res){
   req.session.destroy(function(e) {
     if(e)
       res.status(400).send(e);
+    else
+      res.status(200).send('deleted');
   });
 }

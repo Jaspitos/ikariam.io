@@ -15,31 +15,33 @@
 
 <body>
     <nav>
-        <div class="nav-wrapper deep-purple darken-1">
-            <a href="/"><img class="brand-logo responsive-img" src="img/bg-logo4.png" style="padding: 4;">
-                </>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-
-                    <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-30%;"></li>
-                    <li><a href="/chat">Chat</a></li>
-
-                    <li><a href="#!">Foro</a>
-                    </li>
-                    <li><a href="#!">Herramientas</a>
-                    </li>
-                    <li><a class="dropdown-button deep-purple darken-2" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
-                    </li>
-                    <!-- Dropdown Structure -->
-                    <ul id='dropdown1' class='dropdown-content'>
-                        <li class="divider"></li>
-                        <li><a href="/profile">Panel de usuario</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a id="logout" href="#!">Cerrar sesión</a>
-                        </li>
-                    </ul>
+        <div class="nav-wrapper teal accent-4">
+            <a href="/"><img class="brand-logo responsive-img" src="img/" style="padding: 4;"></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><img src="<%= profile.profilePic %>" style="height:50px;width:60px;margin-bottom:-30%;"></li>
+                <li><a href="/chat">Chat</a>
+                </li>
+                <li><a href="#!">Foro</a>
+                </li>
+                <li><a href="#!">Herramientas</a>
+                </li>
+                <li><a class="dropdown-button teal accent-4" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
+                </li>
+                <!-- Dropdown Structure -->
+                <!-- Dropdown Structure -->
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a id="btn-logout">Logout</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#!">Contact Us</a></li>
                 </ul>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/play">Play</a></li>
+                <li><a id="btn-logout">Logout</a></li>
+
+            </ul>
 
         </div>
     </nav>
@@ -70,7 +72,7 @@
                                     <%= userlist[i].email %>
                                 </th>
                                 <th>
-                                  <%= !userlist[i].admin ? 'No' : 'Sí'; %>
+                                    <%= !userlist[i].admin ? 'No' : 'Sí'; %>
                                 </th>
                                 <th>
                                     <button id="<%= userlist[i].username %>" class="btn rmv-btn">Kick</button>
@@ -118,6 +120,10 @@
             alignment: 'right'
         });
     </script>
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+
 
 </body>
 

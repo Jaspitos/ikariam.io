@@ -1,13 +1,14 @@
-require('dotenv').config();
 /**
  *@Author: Javier y Lorenzo
  *@Desc: Starts up web app
  */
 
+ require('dotenv').config();
+
 //Importing modules
 var express = require('express'),
-    app     = express(),
-    http    = require('http').Server(app),
+    app = express(),
+    http = require('http').Server(app),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     mongoose = require('mongoose'),
@@ -33,9 +34,8 @@ console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(proce
 mongoose.Promise = global.Promise;
 /*Check enviromemnt*/
 var dbURL = process.env.DBL_URI;
-if (process.env.NODE_ENV == 'production') {
-    dbURL = process.env.DBC_URI;
-}
+if (process.env.NODE_ENV == 'production')
+  dbURL = process.env.DBC_URI;
 
 mongoose.connect(dbURL, function(e){
   if(e)
@@ -43,9 +43,6 @@ mongoose.connect(dbURL, function(e){
   else
     console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
 });
-
-
-
 
 //App settings
 app.set('port', process.env.PORT || 3000);
@@ -93,7 +90,7 @@ app.use(require('./server/routes/routes'));
 
 //Clients list connection
 var allClientsChat = [],
-  allClientsInicio = [];
+    allClientsInicio = [];
 
 
 //Starts general Chat
@@ -121,12 +118,10 @@ chat.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
-        if (!yaExiste)
-        {
-          allClientsChat.splice(allClientsChat.indexOf(user), 1);
-          chat.emit('disconnect', user, allClientsChat);
-        }
-        else chat.emit('disconnect', 'yaExiste', allClientsChat);
+        if (!yaExiste) {
+            allClientsChat.splice(allClientsChat.indexOf(user), 1);
+            chat.emit('disconnect', user, allClientsChat);
+        } else chat.emit('disconnect', 'yaExiste', allClientsChat);
 
 
 
@@ -152,12 +147,11 @@ inicio.on('connection', function(socket) {
 
 
     socket.on('disconnect', function() {
-        if (!yaExiste)
-        {
-          allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
-          inicio.emit('disconnect', user, allClientsInicio);
+        if (!yaExiste) {
+            allClientsInicio.splice(allClientsInicio.indexOf(user), 1);
+            inicio.emit('disconnect', user, allClientsInicio);
         } else
-          inicio.emit('disconnect', 'yaExiste', allClientsInicio);
+            inicio.emit('disconnect', 'yaExiste', allClientsInicio);
 
 
     });
