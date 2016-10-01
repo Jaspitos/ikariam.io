@@ -19,5 +19,6 @@
 
 
  /*create model*/
+ var Session = mongoose.model('Session', sessionSchema);
 
  module.exports = Session;
