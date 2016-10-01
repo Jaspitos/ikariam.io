@@ -2,7 +2,9 @@ require('dotenv').config();
 
 logindao = require('../dao/logindao'),
 profiledao = require('../dao/profiledao'),
-admindao = require('../dao/admindao');
+admindao = require('../dao/admindao'),
+Session = require('../models/session');
+
 
 module.exports = {
   autoLogin: autoLogin,
@@ -23,8 +25,7 @@ function autoLogin(req, res)
   logindao.autoLogin(req.session.user, req.session.passwd, function(o, e) {
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
-
-              //if (e) res.render('/');
+              if (e) res.redirect('/');
               if (o) {
                   res.render('inicio', {
                       title: "Inicio",
@@ -42,23 +43,30 @@ function autoLogin(req, res)
 
 function manualLogin(req, res){
   logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(o, e) {
-      if (!o) {
+      if (e) {
           res.status(400).send(e);
-      } else {
+      } else if(o) {
+        Session.findOne({'session.user': o.username}, function(e, o) {
+            if (e) {
+                res.status(400).send(e);
+            }
+            if(o) {
+              Session.remove({'_id': o._id}, function(e, o) {
+                  if (e) {
+                      res.status(400).send(e);
+                  }
+              });
+            }
+        });
 
-          if (req.session.user == o.username && req.session.passwd == o.password)
-          {
-            res.status(200).send(o);
-          }
+        req.session.user = o.username;
+        req.session.passwd = o.password;
+        req.session.admin = o.admin;
+        res.status(200).send(o);
 
-          else {
-              req.session.user = o.username;
-              req.session.passwd = o.password;
-              req.session.admin = o.admin;
-              res.status(200).send(o);
-
-          }
       }
+
+
   });
 }
 
@@ -69,14 +77,14 @@ function getSignUp(req, res){
 }
 
 function signUp(req, res){
-  logindao.checkKey(req.body['keyp'], function(er, ob) {
+  logindao.checkKey(req.body['keyp'], function(ob, er) {
       if (ob == true) {
-          logindao.checkUser(req.body['username'], function(err, obb) {
+          logindao.checkUser(req.body['username'], function(obb, err) {
               if (obb == false) {
-                  logindao.checkEmail(req.body['email'], function(error, obj) {
+                  logindao.checkEmail(req.body['email'], function(obj, error) {
                       if (obj == false) {
                           // create a new user
-                          logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(e, o) {
+                          logindao.signUp(req.body['email'], req.body['username'], req.body['pass'], function(o, e) {
                               if (!o)
                                   res.status(400).send(e);
 
@@ -129,10 +137,13 @@ function changeImg(req, res) {
   profiledao.changeImg(req.session.user, req.file.buffer, function(o, e) {
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
-              res.render('profile', {
-                  title: "Perfil",
-                  profile: o
-              });
+            if (e) res.redirect('/');
+            else if (o) {
+                res.render('profile', {
+                    title: "Perfil",
+                    profile: o
+                });
+            }
           })
       }
   })
@@ -143,11 +154,14 @@ function admin(req, res){
       admindao.getUserlist(req.session.user, function(o, e) {
           if (o) {
               profiledao.getProfile(req.session.user, function(ob, err) {
+                if (e) res.redirect('/');
+                else if (o) {
                   res.render('admin', {
                       title: "Panel de admin",
                       userlist: o,
                       profile: ob
                   });
+                }
               })
           }
 
@@ -166,6 +180,7 @@ function deleteAdmin(req, res){
 
 function logout(req, res){
   req.session.destroy(function(e) {
-      res.status(200).send('deleted');
+    if(e)
+      res.status(400).send(e);
   });
 }

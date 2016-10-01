@@ -23,12 +23,13 @@
 			 *@param: pass
 			 *@return:
 			 */
+
 			function autoLogin(user, pass, callback) {
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
 			        if (o) {
-			            o.password == pass ? callback(o) : callback(null); //TODO: COMPROBAR ESTE OPERADOR TERNARIO XD
+			            o.password == pass ? callback(o) : callback(null, e);
 			        } else
 			            callback(null);
 			    })
@@ -42,6 +43,7 @@
 			 */
 			function manualLogin(user, pass, callback) {
 			    var passSecure;
+
 			    User.findOne({
 			        username: user
 			    }, function(e, o) {
@@ -78,9 +80,9 @@
 			        if (e) {
 			            callback(null, e);
 			        } else if (o == null) {
-			            callback(null, false);
+			            callback(false);
 			        } else
-			            callback('userExists', true); //TODO:deberia ser suficiente con poner true
+			            callback(true, 'userExists');
 
 			    });
 			}
@@ -98,9 +100,9 @@
 			        if (e) {
 			            callback(null, e);
 			        } else if (o == null) {
-			            callback(null, false);
+			            callback(false);
 			        } else
-			            callback('emailExists', true);
+			            callback(true, 'emailExists');
 
 			    });
 			}
@@ -118,20 +120,19 @@
 			        if (e) {
 			            callback(null, e);
 			        } else if (o == null) {
-			            callback('invalidKey', false);
+			            callback(false, 'invalidKey');
 			        } else {
 			            if (clave != process.env.KEY) {
 			                Codes.remove({
 			                    'key': clave
 			                }, function(e, o) {
 			                    if (e) {
-			                        callback(null, e);
+			                        callback(false, e);
 			                    } else
-			                        callback(null, true);
+			                        callback(true);
+			                	});
 
-			                });
-
-			            } else callback(null, true);
+			            } else callback(true);
 
 			        }
 
@@ -156,7 +157,7 @@
 			        admin: false
 			    });
 			    newUser.save();
-			    callback(null, 'User created!');
+			    callback(true);
 			};
 
 			/*********************************************************

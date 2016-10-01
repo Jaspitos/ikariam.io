@@ -24,7 +24,9 @@ exports.getProfile = function(username, callback) {
     User.findOne({
         username: username
     }, function(e, o) {
-        if (o) {
+        if(e)
+        callback(null, e);
+        else if (o) {
             callback(o, false);
         } else
             callback(null, true);
