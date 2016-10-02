@@ -33,13 +33,16 @@ console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(proce
 
 mongoose.Promise = global.Promise;
 /*Check enviromemnt*/
-if (process.env.NODE_ENV == 'development') {
-    mongoose.connect(process.env.DBL_URI);
-    console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
-} else {
-    mongoose.connect(process.env.DBC_URI);
-}
+var dbURL = process.env.DBL_URI;
+if (process.env.NODE_ENV == 'production')
+  dbURL = process.env.DBC_URI;
 
+mongoose.connect(dbURL, function(e){
+  if(e)
+    console.log(chalk.bold.bgRed(e));
+  else
+    console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
+});
 
 //App settings
 app.set('port', process.env.PORT || 3000);
@@ -57,22 +60,15 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-var dbURL = process.env.DBL_URI;
-if (app.get('env') == 'production') {
-    dbURL = process.env.DBC_URI;
-}
-
 //Defining session variable
 var sessionMiddleware = session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 86400000
+      maxAge: 18000000
     },
-    store: new MongoStore({
-        url: dbURL
-    })
+    store: new MongoStore({ mongooseConnection: mongoose.connection, stringify: false })
 });
 
 app.use(sessionMiddleware);
