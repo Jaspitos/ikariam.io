@@ -25,11 +25,11 @@ exports.getProfile = function(username, callback) {
         username: username
     }, function(e, o) {
         if(e)
-        callback(null, e);
-        else if (o) {
-            callback(o, false);
-        } else
-            callback(null, true);
+          callback(null, e);
+        else if (o)
+          callback(o);
+        else
+          callback(null);
     })
 
 }

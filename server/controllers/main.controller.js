@@ -20,17 +20,19 @@ module.exports = {
   logout: logout
 }
 
-function autoLogin(req, res)
-{
+function autoLogin(req, res) {
   logindao.autoLogin(req.session.user, req.session.passwd, function(o, e) {
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
-              if (e) res.redirect('/');
+              if (e)
+                res.status(400).send(e);
               if (o) {
                   res.render('inicio', {
                       title: "Inicio",
                       profile: o
                   });
+              } else {
+                res.redirect('/');
               }
           });
       } else {
@@ -55,10 +57,12 @@ function manualLogin(req, res){
                   if (e) {
                       res.status(400).send(e);
                   }
+                  req.session.sess = false;
               });
             }
         });
 
+        req.session.sess = true;
         req.session.user = o.username;
         req.session.passwd = o.password;
         req.session.admin = o.admin;
@@ -109,12 +113,15 @@ function getInicio(req, res) {
 function chat(req, res) {
   // create a new user
   profiledao.getProfile(req.session.user, function(o, e) {
-      if (e) res.redirect('/');
-      else if (o) {
+      if (e)
+          res.status(400).send(e);
+      if (o) {
           res.render('chat', {
               title: "Chat",
               profile: o
           });
+      } else {
+          res.redirect('/');
       }
 
   })
@@ -123,12 +130,15 @@ function chat(req, res) {
 function getProfile(req, res){
   // create a new user
   profiledao.getProfile(req.session.user, function(o, e) {
-      if (e) res.redirect('/');
+      if (e)
+        res.status(400).send(e);
       else if (o) {
           res.render('profile', {
               title: "Perfil",
               profile: o
           });
+      } else {
+        res.redirect('/');
       }
   })
 }
@@ -137,12 +147,15 @@ function changeImg(req, res) {
   profiledao.changeImg(req.session.user, req.file.buffer, function(o, e) {
       if (o) {
           profiledao.getProfile(req.session.user, function(o, e) {
-            if (e) res.redirect('/');
+            if (e)
+              res.status(400).send(e);
             else if (o) {
                 res.render('profile', {
                     title: "Perfil",
                     profile: o
                 });
+            } else {
+              res.redirect('/');
             }
           })
       }
@@ -154,13 +167,17 @@ function admin(req, res){
       admindao.getUserlist(req.session.user, function(o, e) {
           if (o) {
               profiledao.getProfile(req.session.user, function(ob, err) {
-                if (e) res.redirect('/');
+                if (e)
+                  res.status(400).send(e);
                 else if (o) {
                   res.render('admin', {
                       title: "Panel de admin",
                       userlist: o,
                       profile: ob
                   });
+                } else {
+                  res.redirect('/');
+
                 }
               })
           }
