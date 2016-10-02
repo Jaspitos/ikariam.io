@@ -23,7 +23,7 @@ exports.getUserlist = function(user, callback) {
                 "profilePic": results[i].profilePic,
                 "admin": results[i].admin
             };
-            usuarios.push(usuario, null);
+            usuarios.push(usuario);
         }
         if (err) callback(null, err);
         else callback(usuarios, null);
