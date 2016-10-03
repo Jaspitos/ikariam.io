@@ -33,16 +33,12 @@ console.log(chalk.bold.green('Entorno elegido ----> ') + chalk.bold.yellow(proce
 
 mongoose.Promise = global.Promise;
 /*Check enviromemnt*/
-var dbURL = process.env.DBL_URI;
-if (process.env.NODE_ENV == 'production')
-  dbURL = process.env.DBC_URI;
-
-mongoose.connect(dbURL, function(e){
-  if(e)
-    console.log(chalk.bold.bgRed(e));
-  else
+if (process.env.NODE_ENV == 'development') {
+    mongoose.connect(process.env.DBL_URI);
     console.log(chalk.bold.bgGreen('mongo :: connected to database :: ikariam'));
-});
+} else {
+    mongoose.connect(process.env.DBC_URI);
+}
 
 //App settings
 app.set('port', process.env.PORT || 3000);
