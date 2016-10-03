@@ -24,7 +24,6 @@
         <img class="responsive-img" src="img/bg-logo4.png">
     </div> -->
 
-
     <div class="signup__container z-depth-1">
 
         <div class="container__child signup__form">
@@ -45,10 +44,25 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+
             </form>
             </div>
         </div>
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Sesión cerrada</h4>
+            <p>Su sesión ha sido cerrada debido a que se ha iniciado sesión desde otro dispositivo</p>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+
+        <% if(session == 'removed') { %>
+          <input type="hidden" id="sess" value="<%=session%>" />
+        <% } %>
+
         <script src="/js/libs/materialize.js"></script>
         <script src="/js/libs/jquery.form.js"></script>
         <script src="/js/views/login.js"></script>

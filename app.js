@@ -13,7 +13,7 @@ var express = require('express'),
     session = require('express-session'),
     mongoose = require('mongoose'),
     MongoStore = require('connect-mongo')(session),
-    dbprop = require('./server/properties/db-properties'),
+    flash = require('connect-flash'),
     io = require('socket.io')(http),
     chat = io.of('/chatNsp'),
     inicio = io.of('/inicioNsp'),
@@ -72,6 +72,7 @@ var sessionMiddleware = session({
 });
 
 app.use(sessionMiddleware);
+app.use(flash());
 
 //Une sessions con socket.io
 chat.use(function(socket, next) {

@@ -26,43 +26,43 @@ function autoLogin(req, res) {
           profiledao.getProfile(req.session.user, function(o, e) {
               if (e)
                 res.status(400).send(e);
-              if (o) {
+              else if (o) {
                   res.render('inicio', {
                       title: "Inicio",
                       profile: o
                   });
               } else {
+                req.flash('session', 'removed');
                 res.redirect('/');
               }
           });
       } else {
-          res.render('login', {
-              title: 'Entrar'
-          });
+        var sess = req.flash('session')
+        res.render('login', {
+            title: 'Entrar',
+            session: sess
+        });
       }
   });
 }
 
 function manualLogin(req, res){
   logindao.manualLogin(req.body['userLogin'], req.body['passLogin'], function(o, e) {
-      if (e) {
-          res.status(400).send(e);
-      } else if(o) {
+      if (e)
+        res.status(400).send(e);
+      else if (o) {
         Session.findOne({'session.user': o.username}, function(e, o) {
-            if (e) {
+            if (e)
                 res.status(400).send(e);
-            }
-            if(o) {
+            else if (o) {
               Session.remove({'_id': o._id}, function(e, o) {
-                  if (e) {
+                  if (e)
                       res.status(400).send(e);
-                  }
-                  req.session.sess = false;
               });
             }
         });
 
-        req.session.sess = true;
+
         req.session.user = o.username;
         req.session.passwd = o.password;
         req.session.admin = o.admin;
@@ -94,7 +94,6 @@ function signUp(req, res){
 
                               else
                                   res.status(200).send(o);
-
                           });
 
                       } else res.status(400).send(error);
@@ -102,12 +101,25 @@ function signUp(req, res){
 
               } else res.status(400).send(err);
           })
+
       } else res.status(400).send(er);
   })
 }
 
 function getInicio(req, res) {
-  res.render('/');
+  profiledao.getProfile(req.session.user, function(o, e) {
+      if (e)
+        res.status(400).send(e);
+      else if (o) {
+          res.render('inicio', {
+              title: "Inicio",
+              profile: o
+          });
+      } else {
+        req.flash('session', 'removed');
+        res.redirect('/');
+      }
+  });
 }
 
 function chat(req, res) {
@@ -115,13 +127,14 @@ function chat(req, res) {
   profiledao.getProfile(req.session.user, function(o, e) {
       if (e)
           res.status(400).send(e);
-      if (o) {
+      else if (o) {
           res.render('chat', {
               title: "Chat",
               profile: o
           });
       } else {
-          res.redirect('/');
+        req.flash('session', 'removed');
+        res.redirect('/');
       }
 
   })
@@ -138,6 +151,7 @@ function getProfile(req, res){
               profile: o
           });
       } else {
+        req.flash('session', 'removed');
         res.redirect('/');
       }
   })
@@ -155,6 +169,7 @@ function changeImg(req, res) {
                     profile: o
                 });
             } else {
+              req.flash('session', 'removed');
               res.redirect('/');
             }
           })
@@ -176,8 +191,8 @@ function admin(req, res){
                       profile: ob
                   });
                 } else {
+                  req.flash('session', 'removed');
                   res.redirect('/');
-
                 }
               })
           }
