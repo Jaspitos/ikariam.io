@@ -1,5 +1,5 @@
 /**
- *@Author: Javier
+ *@Author: Javier y Loren
  *@Desc: Model for user
  */
 
