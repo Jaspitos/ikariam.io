@@ -20,5 +20,10 @@ $(document).ready(function() {
         }
     });
 
+    if($('#sess').val() == 'removed')
+    {
+      $('.modal-trigger').leanModal();
+      $('#modal1').openModal();
+    }
 
 });

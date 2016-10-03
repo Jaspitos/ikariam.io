@@ -4,7 +4,7 @@
     <title>
         <%= title %>
     </title>
-    <link rel="stylesheet" type="text/css" href="css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="css/inicio.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
@@ -17,21 +17,21 @@
 <body>
   <nav>
       <div class="nav-wrapper light-blue darken-1">
-          <a href="/"><img class="brand-logo responsive-img" src="img/" style="padding: 4;"></a>
+          <a><img class="brand-logo responsive-img" src="img/" style="padding: 4;"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-              <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-30%;"></li>
-              <li><a href="/chat">Chat</a>
-              </li>
-              <li><a href="#!">Foro</a>
-              </li>
-              <li><a href="#!">Herramientas</a>
-              </li>
-              <li><a class="dropdown-button light-blue" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a>
-              </li>
+              <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-22%;margin-right:15px;"></li>
+              <li class="active"><a href="/inicio">Inicio</a></li>
+              <li><a href="/chat">Chat</a></li>
+              <li><a href="#!">Foro</a></li>
+              <li><a href="#!">Herramientas</a></li>
+              <li><a class="dropdown-button light-blue" href="#" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a></li>
               <!-- Dropdown Structure -->
               <ul id='dropdown1' class='dropdown-content'>
                   <li><a href="/profile">Perfil</a></li>
+                  <% if(profile.admin) { %>
+                      <li><a href="/admin">Panel administrador</a></li>
+                  <% } %>
                   <li class="divider"></li>
                   <li><a id="logout">Salir</a></li>
               </ul>
@@ -71,8 +71,8 @@
 
     </div>
 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/js/libs/materialize.js"></script>
     <script src="/js/views/logout.js"></script>
     <script src="/js/views/inicio.js"></script>
@@ -84,7 +84,7 @@
             hover: true,
             gutter: 0,
             belowOrigin: true,
-            alignment: 'right'
+            alignment: 'left'
         });
     </script>
     <script>
