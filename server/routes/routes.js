@@ -40,8 +40,8 @@
  router.post('/signup', mainControler.signUp);
 
  /*
-  * @Route: inicio.html
-  * @Desc: Redirects you to app.get('/')
+  * @Route: signup.html
+  * @Desc: Takes you to signup view
   * @Http-type: GET
   */
  router.get('/inicio', mainControler.getInicio);

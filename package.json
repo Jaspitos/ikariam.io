@@ -4,8 +4,7 @@
   "description": "Un proyecto para controlarlos a todos, cya nerds",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon app.js",
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "debug": "debug app.js"
   },
   "author": "Javier y Lorenzo",
