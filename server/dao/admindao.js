@@ -12,22 +12,28 @@ var User = require('../models/user');
  *@return: list of users
  */
 exports.getUserlist = function(user, callback) {
-    //TODO:Comprueba si el usuario es admin, tambien lo comprueba en el routes
-    User.find({}, (err, results) => {
-        var usuarios = [];
-        var usuario = null;
-        for (var i = 0; i < results.length; i++) {
-            usuario = {
-                "username": results[i].username,
-                "email": results[i].email,
-                "profilePic": results[i].profilePic,
-                "admin": results[i].admin
-            };
-            usuarios.push(usuario);
-        }
-        if (err) callback(null, err);
-        else callback(usuarios, null);
-    });
+  User.findOne({username: user}, (err, res) => {
+    if (err)
+      callback(null, err);
+    else if (res && res.admin) {
+        User.find({}, (err, results) => {
+            var usuarios = [];
+            var usuario = null;
+            for (var i = 0; i < results.length; i++) {
+                usuario = {
+                    "username": results[i].username,
+                    "email": results[i].email,
+                    "profilePic": results[i].profilePic,
+                    "admin": results[i].admin
+                };
+                usuarios.push(usuario);
+                callback(usuarios, null);
+            }
+        });
+    } else
+      callback(null);
+  });
+
 }
 
 /**

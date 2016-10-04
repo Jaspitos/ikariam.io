@@ -5,7 +5,6 @@
 
 			/*Instance of needed modules*/
 			var User = require('../models/user');
-			var chalk = require('chalk');
 			var Codes = require('../models/code');
 
 			module.exports = {
