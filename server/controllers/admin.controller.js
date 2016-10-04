@@ -1,7 +1,7 @@
 admindao = require('../dao/admindao');
 profiledao = require('../dao/profiledao');
 
-module.exports = {
+module.exports = { //TODO: LOS MODULOS EXPORTADOS SON NADA INTUITIVOS O ALMENOS ME LO PARECE kisses
   admin: admin,
   deleteAdmin: deleteAdmin,
 }

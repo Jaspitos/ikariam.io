@@ -1,6 +1,13 @@
+/**
+  *@author: Loren y Javier
+  *@description Collection of controllers
+  *@date:
+  */
+
 loginController = require('../controllers/login.controller'),
 profileController = require('../controllers/profile.controller'),
 adminController = require('../controllers/admin.controller');
+postController = require('../controllers/post.controller');
 
 
 module.exports = {
@@ -14,6 +21,7 @@ module.exports = {
   changeImg: changeImg,
   admin: admin,
   deleteAdmin: deleteAdmin,
+  savePost: savePost,
   logout: logout
 }
 
@@ -55,6 +63,14 @@ function admin(req, res){
 
 function deleteAdmin(req, res){
   adminController.deleteAdmin(req, res);
+}
+
+function newPost(req,res){
+  postController.newPost(req,res);
+}
+
+function savePost(req,res){
+  postController.savePost(req,res);
 }
 
 function logout(req, res){

@@ -3,14 +3,13 @@
  *@Desc: Model for list of posts
  */
 
-var mongoose      = require('mongoose')
-    schema        = mongoose.schema;
+ var mongoose = require('mongoose');
+ var schema = mongoose.Schema;
 
 
 /*defining schema*/
 var postSchema = new schema({
 
-    postId: { type: Schema.Types.ObjectId, ref: 'Posts' },
     user: {String, required : true},
     title: {String, required : true},
     description: String,
@@ -18,11 +17,10 @@ var postSchema = new schema({
     date: Date,
     comments: []
 
-
 });
 
 
 
 var Post = mongoose.model('Post',postSchema);
 
-export.module = Post;
+module.exports = Post;

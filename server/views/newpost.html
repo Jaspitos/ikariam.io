@@ -1,0 +1,77 @@
+<html>
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' type="text/css" href='css/materialize.min.css'>
+    <link rel="stylesheet" type="text/css" href="css/ikariam.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper light-blue darken-1">
+            <a><img class="brand-logo responsive-img" src="img/" style="padding: 4;"></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+
+                <li><img src="<%= profile.profilePic %>" style="height:50px;width:70px;margin-bottom:-22%;margin-right:15px;"></li>
+                <li><a href="/inicio">Inicio</a></li>
+                <li><a href="/chat">Chat</a></li>
+                <li><a href="#!">Foro</a></li>
+                <li><a href="#!">Herramientas</a></li>
+                <li><a class="dropdown-button light-blue" href="#!" data-activates="dropdown1">Bienvenido, <%= profile.username %><i class="material-icons right">arrow_drop_down</i></a></li>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown1' class='dropdown-content'>
+                  <li><a href="/profile">Perfil</a></li>
+                  <li class="divider"></li>
+                  <li><a id="logout">Salir</a></li>
+                </ul>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/play">Play</a></li>
+                <li><a id="btn-logout">Logout</a></li>
+
+            </ul>
+
+        </div>
+    </nav>
+    <!-- Main container -->
+    <div class="container">
+
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Echar de la comunidad</h4>
+            <h2 class="user2rmv" style="color:red;"></h2>
+            <p>Si aceptas expulsarle de la comunidad, serán borrado todos sus datos personales</p>
+        </div>
+        <div class="modal-footer">
+            <a id="acept-rmv" href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Acepto</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </div>
+        <form id="form-rmv" action "/admin" method="POST">
+            <input id="input-rmv" name="user" hidden></input>
+        </form>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="/js/libs/materialize.js"></script>
+    <script src="/js/views/admin.js"></script>
+    <script src="/js/views/logout.js"></script>
+    <script>
+        $(".button-collapse").sideNav();
+    </script>
+
+
+</body>
+
+</html>

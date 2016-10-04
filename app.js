@@ -1,6 +1,7 @@
 /**
- *@Author: Javier y Lorenzo
- *@Desc: Starts up web app
+ *@author: Javier y Lorenzo
+ *@desc: Starts up web app
+ *@date: 05/10/2016
  */
 
  require('dotenv').config();
@@ -81,7 +82,7 @@ inicio.use(function(socket, next) {
 });
 
 
-//Module of routes conf
+//Routes middleware
 app.use(require('./server/routes/routes'));
 
 
