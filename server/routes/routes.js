@@ -87,7 +87,7 @@ router.get('/admin', mainControler.deleteAdmin);
  * @Desc: Takes you to create new post view
  * @Http-type: GET
  */
-router.post('/npost', mainControler.newPost);
+router.get('/npost', mainControler.newPost);
 
 /**
  * @Route: post.html

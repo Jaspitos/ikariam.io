@@ -21,6 +21,7 @@ module.exports = {
   changeImg: changeImg,
   admin: admin,
   deleteAdmin: deleteAdmin,
+  newPost: newPost,
   savePost: savePost,
   logout: logout
 }

@@ -10,10 +10,10 @@
 /*defining schema*/
 var postSchema = new schema({
 
-    user: {String, required : true},
-    title: {String, required : true},
+    user: String,
+    title: String,
     description: String,
-    content: {String, require : true},
+    content: String,
     date: Date,
     comments: []
 
